@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Files Manager - Login</title>
+    <link rel="shortcut icon" href="img/favicon.png"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" action="{{ path_for('login') }}" method="post">
+        <h2 class="form-signin-heading">Se connecter</h2>
+
+        {{ csrf() }}
+
+
+        <div class="form-group {% if alert.errors.email %} has-error{% endif %}">
+          <label for="inputEmail" class="sr-only">Adresse email</label>
+          <input type="email" id="inputEmail" class="form-control" value="{{ old.email }}" placeholder="Adresse email" required autofocus>
+          {% if alert.errors.email %}
+            <span class="help-block">{{ alert.errors.email }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group {% if alert.errors.password %} has-error{% endif %}">
+          <label for="inputPassword" class="sr-only">Mot de passe</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+          {% if alert.errors.password %}
+            <span class="help-block">{{ alert.errors.password }}</span>
+          {% endif %}
+        </div>
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Se souvenir de moi
+          </label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+      </form>
+
+    </div>
+
+  </body>
+</html>

@@ -31,4 +31,10 @@ class Controller {
       return $response->withStatus($status)->withHeader('Location', $this->router->pathFor($name));
     }
 
+    public function checkAuth(ResponseInterface $response){
+      if(!isset($_SESSION['auth']) || empty($_SESSION['auth'])){
+        $this->redirect($response, 'login');
+      }
+    }
+
 }

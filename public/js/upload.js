@@ -33,10 +33,6 @@ function handleResponse(http) {
         if (response < 100) {
             setTimeout("sendRequest()", 1000);
         }
-        else {
-            document.getElementById("status").innerHTML = '<span class="label label-success">Fichier uploadé !</span>';
-            //setTimeout(redirection, 5000);
-        }
     }
 }
 
