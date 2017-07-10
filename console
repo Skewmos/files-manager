@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+// File: sushi
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$application = new Application('Sushi', '1.0.0');
+
+$CacheClearCommand = new \Commands\CacheClear();
+//$GenerateCommand = new \Commands\GenerateCommand();
+$GenerateController = new \Commands\GenerateController();
+$GenerateMiddleware = new \Commands\GenerateMiddleware();
+
+$application->add($CacheClearCommand);
+//$application->add($GenerateCommand);
+$application->add($GenerateController);
+$application->add($GenerateMiddleware);
+$application->run();
