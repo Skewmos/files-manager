@@ -8,6 +8,7 @@ use Respect\Validation\Validator;
 class HomeController extends Controller {
 
   public function getHome(RequestInterface $request, ResponseInterface $response) {
+    r($_SESSION);
     $this->render($response, 'pages/home.twig');
   }
 
