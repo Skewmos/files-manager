@@ -34,8 +34,8 @@ function handleResponse(http) {
             setTimeout("sendRequest()", 1000);
         }
         else {
-            document.getElementById("status").innerHTML = '<span class="label label-success">Fichier uploadé, la page va s\'actualiser dans 5 secondes...</span>';
-            setTimeout(redirection, 5000);
+            document.getElementById("status").innerHTML = '<span class="label label-success">Fichier uploadé !</span>';
+            //setTimeout(redirection, 5000);
         }
     }
 }

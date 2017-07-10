@@ -11,6 +11,7 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [ ] Comptes utilisateur.
 - [ ] Panel d'administration.
 - [ ] Upload de fichiers.
+- [x] Bar de progression d'upload.
 - [ ] Téléchargement des fichiers.
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
 - [ ] Partage de dossier entre utilisateur.

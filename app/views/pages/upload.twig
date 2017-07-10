@@ -2,13 +2,13 @@
 
 {% block content %}
 
-  <h2><strong>Formulaire d'upload :</strong></h2>
+  <h1><strong>Formulaire d'upload:</strong></h1>
   <form class="form-group" id="uploadform" action="" method="post" enctype=multipart/form-data>
     {{ csrf() }}
     <input type="hidden" value="uploadform" name="{{ id_upload }}">
     <input id="file" type="file" name="file" class="file">
     <div class="input-group col-xs-12">
-      <input type="text" class="form-control" name="file" disabled placeholder="Uploader un fichier">
+      <input type="text" class="form-control" name="file" disabled placeholder="Votre fichier">
       <span class="input-group-btn">
         <button class="browse btn btn-primary" type="button"><i class="glyphicon glyphicon-file"></i> Choisir un fichier</button>
       </span>
@@ -26,8 +26,15 @@
     <button type="submit" id="btnSubmit" class="btn btn-success"><span class="glyphicon glyphicon-open"></span> Uploader</button>
   </form>
 
+  <div class="well">
+    <h3 class="text-center">Les choses à savoirs</h3>
+    <p class="text-center">
+      La taille maximale des fichiers autorisés est de xMo<br>
+      Les formats autorisés sont (...)<br>
+      Après la fin de l'upload, vous serez rediriger vers votre répertoire<br>
+    </p>
+  </div>
 
-  <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/upload.js"></script>
   <script type="text/javascript">
 
@@ -60,7 +67,7 @@
 
 
   function redirection() {
-    window.location.assign("{#  path_for('home')  #}");
+    window.location.assign("{{ path_for('home') }}");
   }
 
   function sendRequest() {
