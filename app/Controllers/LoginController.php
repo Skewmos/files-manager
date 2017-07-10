@@ -8,11 +8,19 @@ use Respect\Validation\Validator;
 class LoginController extends Controller {
 
   public function getLogin(RequestInterface $request, ResponseInterface $response) {
-    $this->render($response, 'login.twig');
+    if (isset($_SESSION['auth']) || !empty($_SESSION['auth'])) {
+      return $this->redirect($response, 'home');
+    } else {
+      $this->render($response, 'login.twig');
+    }
   }
 
   public function postLogin(RequestInterface $request, ResponseInterface $response) {
-    //$this->render($response, 'login.twig');
+    if (isset($_SESSION['auth']) || !empty($_SESSION['auth'])) {
+      return $this->redirect($response, 'home');
+    } else {
+      // $this->render($response, 'login.twig');
+    }
   }
 
   public function getLogout(RequestInterface $request, ResponseInterface $response) {
