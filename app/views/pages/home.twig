@@ -4,14 +4,6 @@
 
 <h1>Blog</h1>
 
-<div class="list-group">
-{% for post in posts %}
-    <a href="#" class="list-group-item">{{ post.name }}</a>
-{% else %}
-    <p>Pas d'article trouvé.</p>
-{% endfor %}
-</div>
-
 <form action="{{ path_for('home') }}" method="post">
 
   {{ csrf() }}

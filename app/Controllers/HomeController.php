@@ -8,9 +8,7 @@ use Respect\Validation\Validator;
 class HomeController extends Controller {
 
   public function getHome(RequestInterface $request, ResponseInterface $response) {
-    $datas = $this->medoo->select("posts", "*");
-    // r($datas);
-    $this->render($response, 'pages/home.twig', ["posts" => $datas]);
+    $this->render($response, 'pages/home.twig');
   }
 
   public function postHome(RequestInterface $request, ResponseInterface $response) {

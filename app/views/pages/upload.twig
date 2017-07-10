@@ -1,0 +1,77 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+  <h2><strong>Formulaire d'upload :</strong></h2>
+  <form class="form-group" id="uploadform" action="" method="post" enctype=multipart/form-data>
+    {{ csrf() }}
+    <input type="hidden" value="uploadform" name="{{ id_upload }}">
+    <input id="file" type="file" name="file" class="file">
+    <div class="input-group col-xs-12">
+      <input type="text" class="form-control" name="file" disabled placeholder="Uploader un fichier">
+      <span class="input-group-btn">
+        <button class="browse btn btn-primary" type="button"><i class="glyphicon glyphicon-file"></i> Choisir un fichier</button>
+      </span>
+    </div>
+
+    <br/>
+    <div id="thebar" class="progress progress-striped active">
+      <div id="progress-bar" class="progress-bar" style="width: 0%">0%</div>
+    </div>
+
+    <span id="alertFile" class="label label-danger"><strong>Fichier trop lourd, veuillez en choisir un autre !</strong></span>
+    <div id="status"></div>
+    <br/>
+
+    <button type="submit" id="btnSubmit" class="btn btn-success"><span class="glyphicon glyphicon-open"></span> Uploader</button>
+  </form>
+
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/upload.js"></script>
+  <script type="text/javascript">
+
+  var maxUploadSize = 5073741824;
+
+  $('div.progress').hide();
+  $('span#alertFile').hide();
+  $("button#btnSubmit").hide();
+
+  $(document).on('click', '.browse', function(){
+    var file = $(this).parent().parent().parent().find('.file');
+    file.trigger('click');
+  });
+  $(document).on('change', '.file', function(){
+    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+
+    if(findSize() > maxUploadSize){
+      $('span#alertFile').show();
+      $('div.progress').hide();
+
+      $("button#btnSubmit").hide();
+    }else{
+      $('div.progress').show();
+      $('span#alertFile').hide();
+
+      $("button#btnSubmit").show();
+    }
+
+  });
+
+
+  function redirection() {
+    window.location.assign("{#  path_for('home')  #}");
+  }
+
+  function sendRequest() {
+      var http = createRequestObject();
+      http.open("GET", "{{ path_for('upload_progress') }}");
+      http.onreadystatechange = function () { handleResponse(http); };
+      http.send(null);
+  }
+  startUpload();
+
+
+  </script>
+
+{% endblock %}
