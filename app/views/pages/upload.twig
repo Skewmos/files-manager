@@ -65,7 +65,6 @@
 
   });
 
-
   function redirection() {
     window.location.assign("{{ path_for('home') }}");
   }
@@ -76,8 +75,6 @@
       http.onreadystatechange = function () { handleResponse(http); };
       http.send(null);
   }
-  startUpload();
-
 
   </script>
 
