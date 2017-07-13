@@ -33,7 +33,7 @@
             <li><a href="{{ path_for('settings') }}"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Paramètres</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a>{{ auth.email }}</a></li>
+            <li><a href="{{ path_for('profil') }}"><span class="glyphicon glyphicon-user"></span> {{ auth.email }}</a></li>
             <li><a href="{{ path_for('home') }}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Revenir sur l'application</a></li>
             <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Se déconnecter</a></li>
           </ul>

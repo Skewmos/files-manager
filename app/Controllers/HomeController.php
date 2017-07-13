@@ -23,4 +23,12 @@ class HomeController extends Controller {
       return $this->redirect($response, 'home');
     }
   }
+
+  public function getProfil(RequestInterface $request, ResponseInterface $response) {
+    $this->render($response, 'pages/profil.twig');
+  }
+
+  public function postProfil(RequestInterface $request, ResponseInterface $response) {
+
+  }
 }

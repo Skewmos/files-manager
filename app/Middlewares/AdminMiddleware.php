@@ -14,7 +14,7 @@ class AdminMiddleware {
 
   public function __invoke(Request $request, Response $response, $next) {
 
-    if($_SESSION['auth']['rank'] != "admin"){
+    if(isset($_SESSION['auth']) && $_SESSION['auth']['rank'] != "admin"){
       // Si l'utilisateur de la session en cours n'est pas admin, rediriger vers le home
       return $response->withRedirect($this->container->router->pathFor('home'));
     }

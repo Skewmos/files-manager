@@ -31,7 +31,7 @@
             <li><a href="{{ path_for('upload') }}"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Uploader un fichier</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a>{{ auth.email }}</a></li>
+            <li><a href="{{ path_for('profil') }}"><span class="glyphicon glyphicon-user"></span> {{ auth.email }}</a></li>
             {% if auth.rank == "admin" %}
               <li><a href="{{ path_for('admin') }}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Administration</a></li>
             {% endif %}
@@ -52,6 +52,10 @@
 
       {% block content %}{% endblock %}
     </div>
+
+    <footer class="footer">
+      <p class="text-center">Files Manager - Codé avec <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> sur <a href="https://github.com/Fukotaku/files-manager" target="_blank">github</a></p>
+    </footer>
 
   </body>
 </html>

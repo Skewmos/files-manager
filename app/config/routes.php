@@ -12,7 +12,7 @@ $app->get('/login', AuthController::class. ':getLogin')->setName('login');
 $app->post('/login', AuthController::class. ':postLogin');
 
 
-////////////// Routes accessible par les utilisateur uniquement /////////////
+////////////// Routes accessibles par les utilisateur uniquement /////////////
 // Middleware pour checker la session utilisateur
 $app->group('', function () {
 
@@ -23,6 +23,10 @@ $app->group('', function () {
   $this->get('/', HomeController::class. ':getHome')->setName('home');
   $this->post('/', HomeController::class. ':postHome');
 
+  // Routes profil
+  $this->get('/profil', HomeController::class. ':getProfil')->setName('profil');
+  $this->post('/profil', HomeController::class. ':postProfil');
+
   // Routes upload
   $this->get('/upload', UploadController::class. ':getUpload')->setName('upload');
   $this->post('/upload', UploadController::class. ':postUpload');
@@ -31,7 +35,7 @@ $app->group('', function () {
 })->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container));
 
 
-////////////// Routes accessible par le compte administrateur uniquement /////////////
+////////////// Routes accessibles par le compte administrateur uniquement /////////////
 // Middlewares pour checker la session utilisateur et droit admin
 $app->group('', function () {
 
