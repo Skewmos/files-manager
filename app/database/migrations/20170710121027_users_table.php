@@ -27,6 +27,10 @@ class UsersTable extends AbstractMigration
      */
     public function change()
     {
+      $this->table('ranks')
+      ->addColumn('name', 'string')
+      ->create();
+
       $this->table('users')
             ->addColumn('email', 'string')
             ->addColumn('password', 'string')
@@ -34,20 +38,14 @@ class UsersTable extends AbstractMigration
             ->addColumn('remember_token', 'string', [
                 'null' => true
             ])
-            ->create();
-
-      $this->table('ranks')
-            ->addColumn('name', 'string')
-            ->create();
-
-      $this->table('users')
             ->addColumn('id_rank', 'integer', [
-                'null' => true
+              'null' => true
             ])
             ->addForeignKey('id_rank', 'ranks', 'id', [
-                'delete' => 'SET_NULL',
-                'update' => 'NO_ACTION'
+              'delete' => 'SET_NULL',
+              'update' => 'NO_ACTION'
             ])
-            ->update();
+            ->create();
+
     }
 }

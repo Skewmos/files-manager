@@ -38,4 +38,8 @@ $app->group('', function () {
   // Route home admin
   $this->get('/admin', AdminController::class. ':getHome')->setName('admin');
 
+  // Route settings admin
+  $this->get('/admin/settings', AdminController::class. ':getSettings')->setName('settings');
+  $this->post('/admin/settings', AdminController::class. ':postSettings');
+
 })->add(new App\Middlewares\AdminMiddleware($container));
