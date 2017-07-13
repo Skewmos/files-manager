@@ -14,6 +14,9 @@ class UploadController extends Controller
       $_SESSION['upload_progress_uploadform']['bytes_processed'] = 0;
     }
 
+    $size = $this->medoo->select('settings', 'upload_size');
+    $params['upload_size'] = $size[0];
+    
     $params['id_upload'] = ini_get("session.upload_progress.name");
     $this->render($response, 'pages/upload.twig', $params);
   }

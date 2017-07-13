@@ -36,10 +36,10 @@
   </div>
 
   <script type="text/javascript">
-    var maxUploadSize = 5073741824;
+    var maxUploadSize = "{{ upload_size }}";
     var redirection = "{{ path_for('home') }}";
     var urlAjax = "{{ path_for('upload_progress') }}";
   </script>
-  <script type="text/javascript" src="js/upload.min.js"></script>
+  <script type="text/javascript" src="{{ path_for('home') }}js/upload.min.js"></script>
 
 {% endblock %}

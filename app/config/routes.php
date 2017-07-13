@@ -32,15 +32,23 @@ $app->group('', function () {
 
 
 ////////////// Routes accessible par le compte administrateur uniquement /////////////
-// Middleware pour checker la session et droit admin
+// Middlewares pour checker la session utilisateur et droit admin
 $app->group('', function () {
 
-  // Route home admin
-  $this->get('/admin', AdminController::class. ':getHome')->setName('admin');
+  // Route logs admin
+  $this->get('/admin', AdminController::class. ':getLog')->setName('admin');
 
   // Route settings admin
   $this->get('/admin/settings', AdminController::class. ':getSettings')->setName('settings');
   $this->post('/admin/settings', AdminController::class. ':postSettings');
+
+  // Route users admin
+  $this->get('/admin/users', AdminController::class. ':getUsers')->setName('users');
+  $this->post('/admin/users', AdminController::class. ':postUsers');
+
+  // Route directory admin
+  $this->get('/admin/directory', AdminController::class. ':getDirectory')->setName('directory');
+  $this->post('/admin/directory', AdminController::class. ':postDirectory');
 
 })
 ->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container))
