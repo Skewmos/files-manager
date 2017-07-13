@@ -1,3 +1,40 @@
+$('div.progress').hide();
+$('span#alertFile').hide();
+$("button#btnSubmit").hide();
+
+$(document).on('click', '.browse', function(){
+  var file = $(this).parent().parent().parent().find('.file');
+  file.trigger('click');
+});
+
+$(document).on('change', '.file', function(){
+  $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+
+  if(findSize() > maxUploadSize){
+    $('span#alertFile').show();
+    $('div.progress').hide();
+
+    $("button#btnSubmit").hide();
+  }else{
+    $('div.progress').show();
+    $('span#alertFile').hide();
+
+    $("button#btnSubmit").show();
+  }
+
+});
+
+function redirection() {
+  window.location.assign(redirection);
+}
+
+function sendRequest() {
+    var http = createRequestObject();
+    http.open("GET", urlAjax);
+    http.onreadystatechange = function () { handleResponse(http); };
+    http.send(null);
+}
+
 function findSize() {
     var fileInput =  document.getElementById("file");
     try{

@@ -35,47 +35,11 @@
     </p>
   </div>
 
-  <script type="text/javascript" src="js/upload.js"></script>
   <script type="text/javascript">
-
-  var maxUploadSize = 5073741824;
-
-  $('div.progress').hide();
-  $('span#alertFile').hide();
-  $("button#btnSubmit").hide();
-
-  $(document).on('click', '.browse', function(){
-    var file = $(this).parent().parent().parent().find('.file');
-    file.trigger('click');
-  });
-  $(document).on('change', '.file', function(){
-    $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
-
-    if(findSize() > maxUploadSize){
-      $('span#alertFile').show();
-      $('div.progress').hide();
-
-      $("button#btnSubmit").hide();
-    }else{
-      $('div.progress').show();
-      $('span#alertFile').hide();
-
-      $("button#btnSubmit").show();
-    }
-
-  });
-
-  function redirection() {
-    window.location.assign("{{ path_for('home') }}");
-  }
-
-  function sendRequest() {
-      var http = createRequestObject();
-      http.open("GET", "{{ path_for('upload_progress') }}");
-      http.onreadystatechange = function () { handleResponse(http); };
-      http.send(null);
-  }
-
+    var maxUploadSize = 5073741824;
+    var redirection = "{{ path_for('home') }}";
+    var urlAjax = "{{ path_for('upload_progress') }}";
   </script>
+  <script type="text/javascript" src="js/upload.min.js"></script>
 
 {% endblock %}
