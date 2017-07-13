@@ -8,4 +8,4 @@ package-lock.json
 cache/*
 !cache/.gitkeep
 directory/*
-!directory/.gitkeep
+!directory/1/.gitkeep

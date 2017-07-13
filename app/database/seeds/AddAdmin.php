@@ -22,7 +22,8 @@ class AddAdmin extends AbstractSeed
       $user = array(
         'email' => 'admin@admin.fr',
         'password' => password_hash("admin", PASSWORD_DEFAULT),
-        'created_at' => date('Y-m-d H:i:s')
+        'created_at' => date('Y-m-d H:i:s'),
+        'id_rank' => 1
       );
       $this->insert('users', $user);
     }

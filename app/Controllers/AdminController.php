@@ -7,11 +7,13 @@ use Psr\Http\Message\ResponseInterface;
 class AdminController extends Controller {
 
   public function getLog(RequestInterface $request, ResponseInterface $response) {
-    r($_SESSION);
     $params = array();
-    $logs = $this->medoo->select('logs', '*');
+    $logs = $this->medoo->select('logs', '*', [
+      "ORDER" => ["date" => "DESC"],
+      "LIMIT" => 15
+    ]);
     r($logs);
-    // $params['logs'] = $this->octetConvertToMo($size[0]);
+    $params['logs'] = $logs;
     $this->render($response, 'admin/logs.twig', $params);
   }
 
