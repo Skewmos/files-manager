@@ -8,9 +8,9 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 
 ## Objectifs
 
-- [ ] Comptes utilisateur.
+- [x] Comptes utilisateur.
 - [ ] Panel d'administration.
-- [ ] Upload de fichiers.
+- [ ] Upload de fichiers dans les répertoires utilisateur.
 - [x] Bar de progression d'upload.
 - [ ] Téléchargement des fichiers.
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).

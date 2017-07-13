@@ -31,10 +31,9 @@ class Controller {
       return $response->withStatus($status)->withHeader('Location', $this->router->pathFor($name));
     }
 
-    public function checkAuth(ResponseInterface $response){
-      if(!isset($_SESSION['auth']) || empty($_SESSION['auth'])){
-        $this->redirect($response, 'login');
-      }
+    public function str_random($length){
+      $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+      return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length);
     }
 
 }
