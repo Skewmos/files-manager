@@ -4,11 +4,13 @@ namespace App\Middlewares;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class SessionMiddleware {
+class AuthMiddleware {
 
+  private $twig;
   private $container;
 
-  public function __construct($container) {
+  public function __construct(\Twig_Environment $twig, $container) {
+    $this->twig = $twig;
     $this->container = $container;
   }
 
@@ -65,10 +67,11 @@ class SessionMiddleware {
         return $response->withRedirect($this->container->router->pathFor('login'));
       }
 
+    }else{
+      $this->twig->addGlobal('auth', isset($_SESSION['auth']) ? $_SESSION['auth'] : []);
     }
 
-    $response = $next($request, $response);
-    return $response;
+    return $next($request, $response);
   }
 
 }

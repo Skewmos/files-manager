@@ -9,7 +9,8 @@ class AuthController extends Controller {
 
 
   public function getLogin(RequestInterface $request, ResponseInterface $response) {
-    if (isset($_SESSION['auth']) || !empty($_SESSION['auth'])) {
+    if (isset($_SESSION['auth']) && !empty($_SESSION['auth'])) {
+      // Si session existante, rediriger vers home
       return $this->redirect($response, 'home');
     } else {
       $this->render($response, 'login.twig');
@@ -17,7 +18,7 @@ class AuthController extends Controller {
   }
 
   public function postLogin(RequestInterface $request, ResponseInterface $response) {
-    if (isset($_SESSION['auth']) || !empty($_SESSION['auth'])) {
+    if (isset($_SESSION['auth']) && !empty($_SESSION['auth'])) {
       // Si session existante, rediriger vers home
       return $this->redirect($response, 'home');
 
@@ -92,10 +93,14 @@ class AuthController extends Controller {
   }
 
   public function getLogout(RequestInterface $request, ResponseInterface $response) {
-    unset($_SESSION['auth']);
-    unset($_SESSION['csrf']);
-    setcookie('remember', NULL, -1);
-    return $this->redirect($response, 'login');
+    if (isset($_SESSION['auth']) && !empty($_SESSION['auth'])) {
+      unset($_SESSION['auth']);
+      unset($_SESSION['csrf']);
+      setcookie('remember', NULL, -1);
+      return $this->redirect($response, 'login');
+    }else{
+      return $this->redirect($response, 'login');
+    }
   }
 
 }

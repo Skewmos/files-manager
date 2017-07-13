@@ -9,11 +9,7 @@ class HomeController extends Controller {
 
   public function getHome(RequestInterface $request, ResponseInterface $response) {
     r($_SESSION);
-    $params = array();
-    if(isset($_SESSION['auth']) && !empty($_SESSION['auth'])){
-      $params['auth'] = $_SESSION['auth'];
-    }
-    $this->render($response, 'pages/home.twig', $params);
+    $this->render($response, 'pages/home.twig');
   }
 
   public function postHome(RequestInterface $request, ResponseInterface $response) {

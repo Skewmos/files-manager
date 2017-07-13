@@ -28,7 +28,7 @@ $app->group('', function () {
   $this->post('/upload', UploadController::class. ':postUpload');
   $this->get('/upload_progress', UploadController::class. ':getUploadProgress')->setName('upload_progress');
 
-})->add(new App\Middlewares\SessionMiddleware($container));
+})->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container));
 
 
 ////////////// Routes accessible par le compte administrateur uniquement /////////////
@@ -42,4 +42,6 @@ $app->group('', function () {
   $this->get('/admin/settings', AdminController::class. ':getSettings')->setName('settings');
   $this->post('/admin/settings', AdminController::class. ':postSettings');
 
-})->add(new App\Middlewares\AdminMiddleware($container));
+})
+->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container))
+->add(new App\Middlewares\AdminMiddleware($container));

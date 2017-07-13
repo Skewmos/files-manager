@@ -10,15 +10,11 @@ class UploadController extends Controller
   public function getUpload(RequestInterface $request, $response)
   {
     $params = array();
-    if(isset($_SESSION['auth']) && !empty($_SESSION['auth'])){
-      $params['auth'] = $_SESSION['auth'];
-    }
     if (isset($_SESSION['upload_progress_uploadform']) && !empty($_SESSION['upload_progress_uploadform'])) {
       $_SESSION['upload_progress_uploadform']['bytes_processed'] = 0;
     }
 
     $params['id_upload'] = ini_get("session.upload_progress.name");
-
     $this->render($response, 'pages/upload.twig', $params);
   }
 
