@@ -16,7 +16,12 @@ class UploadController extends Controller
 
     $size = $this->medoo->select('settings', 'upload_size');
     $params['upload_size'] = $size[0];
-    
+    $params['mo_size'] = $this->octetConvertToMo($size[0]);
+
+    $formats = $this->getformats();
+    $formats = implode(", ", $formats);
+    $params['formats'] = $formats;
+
     $params['id_upload'] = ini_get("session.upload_progress.name");
     $this->render($response, 'pages/upload.twig', $params);
   }

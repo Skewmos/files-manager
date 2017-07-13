@@ -65,6 +65,15 @@ class Controller {
       }
     }
 
+    public function getformats(){
+      return array(
+        'pdf', 'xls', 'csv', 'txt', 'odt', 'doc',
+        'jpg', 'jpeg', 'png', 'bmp', 'gif',
+        'mp4', 'mkv', 'avi', 'wmv',
+        'mp3', 'flac', 'ogg', 'wma'
+      );
+    }
+
     public function get_ip(){
       if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];

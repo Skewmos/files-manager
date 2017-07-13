@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <h1><strong>Formulaire d'upload:</strong></h1>
+  <h1>Uploader un fichier</h1>
   <form class="form-group" id="uploadform" action="" method="post" enctype=multipart/form-data>
     {{ csrf() }}
     <input type="hidden" value="uploadform" name="{{ id_upload }}">
@@ -14,24 +14,22 @@
       </span>
     </div>
 
-    <br/>
+    <br>
     <div id="thebar" class="progress progress-striped active">
       <div id="progress-bar" class="progress-bar" style="width: 0%">0%</div>
     </div>
 
     <span id="alertFile" class="label label-danger"><strong>Fichier trop lourd, veuillez en choisir un autre !</strong></span>
-    <div id="status"></div>
-    <br/>
 
     <button type="submit" id="btnSubmit" class="btn btn-success"><span class="glyphicon glyphicon-open"></span> Uploader</button>
   </form>
 
   <div class="well">
-    <h3 class="text-center">Les choses à savoirs</h3>
+    <h3 class="text-center">Choses à savoirs</h3>
     <p class="text-center">
-      La taille maximale des fichiers autorisés est de xMo<br>
-      Les formats autorisés sont (...)<br>
-      Après la fin de l'upload, vous serez rediriger vers votre répertoire<br>
+      La taille maximale des fichiers autorisés est de {{ mo_size }}Mo.<br>
+      Les formats autorisés sont ({{ formats }}).<br>
+      Après la fin de l'upload, vous serez rediriger vers votre répertoire personnel.<br>
     </p>
   </div>
 

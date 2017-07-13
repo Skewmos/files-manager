@@ -16,7 +16,6 @@ $(document).on('change', '.file', function(){
 
     $("button#btnSubmit").hide();
   }else{
-    $('div.progress').show();
     $('span#alertFile').hide();
 
     $("button#btnSubmit").show();
@@ -74,6 +73,7 @@ function handleResponse(http) {
 }
 
 function startUpload() {
+    $('div.progress').show();
     setTimeout("sendRequest()", 1000);
 }
 
