@@ -31,7 +31,9 @@ class UsersTable extends AbstractMigration
             ->addColumn('email', 'string')
             ->addColumn('password', 'string')
             ->addColumn('created_at', 'datetime')
-            ->addColumn('remember_token', 'string')
+            ->addColumn('remember_token', 'string', [
+                'null' => true
+            ])
             ->create();
 
       $this->table('ranks')
