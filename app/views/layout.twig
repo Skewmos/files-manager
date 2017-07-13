@@ -33,7 +33,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a>{{ auth.email }}</a></li>
             {% if auth.rank == "admin" %}
-              <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Administration</a></li>
+              <li><a href="{{ path_for('admin') }}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Administration</a></li>
             {% endif %}
             <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Se déconnecter</a></li>
           </ul>

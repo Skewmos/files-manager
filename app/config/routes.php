@@ -3,6 +3,7 @@
 use App\Controllers\HomeController;
 use App\Controllers\UploadController;
 use App\Controllers\AuthController;
+use App\Controllers\AdminController;
 
 
 //////////////////// Routes accessible par tous le monde ////////////////////
@@ -12,8 +13,7 @@ $app->post('/login', AuthController::class. ':postLogin');
 
 
 ////////////// Routes accessible par les utilisateur uniquement /////////////
-
-// Middleware pour checker les sessions
+// Middleware pour checker la session utilisateur
 $app->group('', function () {
 
   // Route logout
@@ -29,3 +29,13 @@ $app->group('', function () {
   $this->get('/upload_progress', UploadController::class. ':getUploadProgress')->setName('upload_progress');
 
 })->add(new App\Middlewares\SessionMiddleware($container));
+
+
+////////////// Routes accessible par le compte administrateur uniquement /////////////
+// Middleware pour checker la session et droit admin
+$app->group('', function () {
+
+  // Route home admin
+  $this->get('/admin', AdminController::class. ':getHome')->setName('admin');
+
+})->add(new App\Middlewares\AdminMiddleware($container));
