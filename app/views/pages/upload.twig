@@ -3,7 +3,7 @@
 {% block content %}
 
   <h1>Uploader un fichier</h1>
-  <form class="form-group" id="uploadform" action="" method="post" enctype=multipart/form-data>
+  <form class="form-group" id="uploadform" action="" method="post" enctype="multipart/form-data">
     {{ csrf() }}
     <input type="hidden" value="uploadform" name="{{ id_upload }}">
     <input id="file" type="file" name="file" class="file">
