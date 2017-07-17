@@ -32,17 +32,60 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
   - extension pdo
   - extension mbstring
   - php.ini
-    - session.upload.progress = On;
-    - session.upload_progress.cleanup = Off
-    - file_uploads = On
-    - upload_tmp_dir = tmp
-    - post_max_size = (your_max_upload)M
-    - upload_max_filesize = (your_max_upload)M
+    - `session.upload.progress = On`
+    - `session.upload_progress.cleanup = Off`
+    - `file_uploads = On`
+    - `upload_tmp_dir = tmp`
+    - `post_max_size = (your_max_upload)M`
+    - `upload_max_filesize = (your_max_upload)M`
 - php7+
-  - extension apc/apcu
+  - extension apc
+  - php.ini
+    - `extension = php_apc.dll`
+    - `apc.enabled = 1`
+    - `apc.rfc1867 = On`
+    - `apc.shm_size = 64M`
+    - `apc.max_file_size = (your_max_upload)M`
+  - apcu-ini
+    - `extension=apc.so`
 
 - nginx
-  - client_max_body_size (your_max_upload)m;
+  - `client_max_body_size (your_max_upload)m;`
+
+
+Lien pour l'extension apc: [stackoverflow](https://stackoverflow.com/questions/36129259/php7-with-apcu-call-to-undefined-function-apc-fetch)
+
+
+
+### Configuration nginx :
+
+```
+server {
+    listen      80;
+    server_name domaine.tld;
+
+    root /path/of/project/in/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ ^/.+\.php(/|$) {
+        try_files $uri /index.php = 404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        # for php5 => fastcgi_pass unix:/var/run/php5-fpm.sock;
+
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+}
+```
+
 
 
 ## Librairies/outils

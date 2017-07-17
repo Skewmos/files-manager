@@ -11,7 +11,12 @@ class UploadController extends Controller
   {
     $params = array();
     if(isset($_SESSION['upload_progress_uploadform'])){
-      $_SESSION['upload_progress_uploadform']['bytes_processed'] = 0;
+      if($_SESSION['upload_progress_uploadform']['content_length'] === $_SESSION['upload_progress_uploadform']['bytes_processed']){
+        unset($_SESSION['upload_progress_uploadform']);
+        $upload = false;
+      }else{
+        $upload = true;
+      }
     }
 
     $size = $this->medoo->select('settings', 'upload_size');
@@ -22,7 +27,11 @@ class UploadController extends Controller
     $formats = implode(", ", $formats);
     $params['formats'] = $formats;
 
-    $params['id_upload'] = ini_get("session.upload_progress.name");
+    if($upload === true){
+      $params['upload_en_cours'] = true;
+    }else{
+      $params['id_upload'] = ini_get("session.upload_progress.name");
+    }
     $this->render($response, 'pages/upload.twig', $params);
   }
 
