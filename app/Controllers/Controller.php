@@ -72,7 +72,7 @@ class Controller {
         'jpg', 'jpeg', 'png', 'bmp', 'gif',
         'mp4', 'mkv', 'avi', 'wmv',
         'mp3', 'flac', 'ogg', 'wma',
-        'zip', 'tar.gz'
+        'zip', 'tar.gz', 'rar', 'gzip', 'iso'
       );
     }
 

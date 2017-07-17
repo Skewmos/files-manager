@@ -28,18 +28,21 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 
 ## Pre-requis/configuration
 
-- php 5.6+
+- php5.6+
   - extension pdo
   - extension mbstring
   - php.ini
     - session.upload.progress = On;
-
-- php 7+
-  - reprendre la config de php 5.6+
-  - installer APCu
+    - session.upload_progress.cleanup = Off
+    - file_uploads = On
+    - upload_tmp_dir = tmp
+    - post_max_size = (your_max_upload)M
+    - upload_max_filesize = (your_max_upload)M
+- php7+
+  - extension apc/apcu
 
 - nginx
-  - proxy_request_buffering off;
+  - client_max_body_size (your_max_upload)m;
 
 
 ## Librairies/outils
@@ -78,4 +81,4 @@ $ vendor/bin/phinx seed:run
 
 ## Permissions
 
-Autoriser le dossier `cache` à l'écriture (chmod 775).
+Autoriser les dossiers `cache` et `public/directory` à l'écriture (chmod 775).

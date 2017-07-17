@@ -67,14 +67,14 @@ function handleResponse(http) {
         document.getElementById("progress-bar").innerHTML = response + "%";
 
         if (response < 100) {
-            setTimeout("sendRequest()", 1000);
+            setTimeout("sendRequest()", 3000);
         }
     }
 }
 
 function startUpload() {
     $('div.progress').show();
-    setTimeout("sendRequest()", 1000);
+    setTimeout("sendRequest()", 3000);
 }
 
 (function () {
