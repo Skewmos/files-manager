@@ -18,7 +18,7 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 
 - [x] Panel d'administration.
 - [x] Mise en place de logs au panel admin.
-- [ ] Ajout/Edition/Suppression de compte utilisateur au panel admin.
+- [x] Ajout/Edition/Suppression des comptes utilisateur au panel admin.
 - [ ] Ajout/Edition/Suppression de répertoires du serveur au panel admin.
 - [ ] Modification des paramètres d'application au panel admin.
 
@@ -31,10 +31,10 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
   - extension pdo
   - extension mbstring
   - php.ini
-    - session.upload.progress = On
+    - session.upload.progress = On;
 
 - php 7+
-  - reprendre les la config de php 5.6+
+  - reprendre la config de php 5.6+
   - installer APCu
 
 - nginx
