@@ -25,7 +25,7 @@ class HomeController extends Controller {
 
       // On vérifie si aucun autre utilisateur ne possède cet email
       $search = $this->medoo->select('users', '*',[
-        'email' => $emailPost,
+        'email' => $_POST['email'],
         'id[!]' => $_SESSION['auth']['id']
       ]);
 
@@ -38,13 +38,13 @@ class HomeController extends Controller {
         // Si email non trouvé, continuer
 
         $this->medoo->update('users', [
-          'email' => $emailPost
+          'email' => $_POST['email']
         ],[
           'id' => $_SESSION['auth']['id']
         ]);
 
         // On vérifie si l'utilisateur souhaite changer de mot de passe
-        if(isset($_POST['password']) && isset($_POST['password_confirm'])){
+        if(isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['password_confirm']) && !empty($_POST['password_confirm'])){
 
           // Si les 2 champs sont rempli, faire la vérification et enregistrer
           $passwordPost = $_POST['password'];
@@ -69,8 +69,8 @@ class HomeController extends Controller {
             return $this->redirect($response, 'profil');
           }
 
-        }elseif( (isset($_POST['password']) && !isset($_POST['password_confirm']))
-         || (!isset($_POST['password']) && isset($_POST['password_confirm'])) ){
+        }elseif( ( (isset($_POST['password']) && !empty($_POST['password'])) && (!isset($_POST['password_confirm']) || empty($_POST['password_confirm'])) )
+         || ( (!isset($_POST['password']) && empty($_POST['password'])) && (isset($_POST['password_confirm']) || !empty($_POST['password_confirm'])) ) ){
            // Si l'un des 2 champs n'est pas rempli, afficher l'erreur
            $errors['password'] = 'Vous n\'avez pas confirmé votre mot de passe';
            $this->alert($errors, 'errors');

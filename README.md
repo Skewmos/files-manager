@@ -19,11 +19,20 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [ ] Mise en place de logs au panel admin.
 
 
-## Pre-requis
+## Pre-requis/configuration
 
 - php 5.6+
   - extension pdo
-  - extension mbstring  
+  - extension mbstring
+  - php.ini
+    - session.upload.progress = On
+
+- php 7+
+  - reprendre les la config de php 5.6+
+  - installer APCu
+
+- nginx
+  - proxy_request_buffering off;
 
 
 ## Librairies/outils
