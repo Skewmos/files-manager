@@ -48,7 +48,7 @@ class UploadController extends Controller
       echo $current < $total ? ceil($current / $total * 100) : 100;
     }
     else {
-      echo 25;
+      echo 100;
     }
   }
 
