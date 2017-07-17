@@ -2,8 +2,10 @@
 composer.lock
 composer.phar
 vendor/*
-cache/*
-.env
-!cache/.gitkeep
 node_modules/*
 package-lock.json
+.env
+cache/*
+!cache/.gitkeep
+directory/*
+!directory/1/.gitkeep

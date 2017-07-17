@@ -1,0 +1,30 @@
+{% extends "admin.twig" %}
+
+{% block content %}
+
+<h1>Les derniers logs</h1>
+<br>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>Ip</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for log in logs %}
+    <tr>
+      <td>{{ log.message }}</td>
+      <td>{{ log.ip }}</td>
+      <td>{{ log.date|date('d/m/Y H:i:s') }}</td>
+    </tr>
+  {% else %}
+    <tr>
+      <td colspan="3">Pas de log pour le moment.</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

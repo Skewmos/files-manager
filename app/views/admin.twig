@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Files Manager</title>
+    <title>Files Manager - Administration</title>
     <link rel="shortcut icon" href="{{ path_for('home') }}img/favicon.png"/>
     <link rel="stylesheet" href="{{ path_for('home') }}css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ path_for('home') }}css/style.min.css">
@@ -11,7 +11,7 @@
   <script src="{{ path_for('home') }}js/bootstrap.min.js"></script>
   <body>
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -21,20 +21,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ path_for('home') }}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Files Manager</a>
+          <a class="navbar-brand" href="{{ path_for('admin') }}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Administration</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="{{ path_for('home') }}"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Mon répertoire</a></li>
-            <li><a href="{{ path_for('upload') }}"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Uploader un fichier</a></li>
+            <li><a href="{{ path_for('admin') }}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Les logs</a></li>
+            <li><a href="{{ path_for('users') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Les utilisateurs</a></li>
+            <li><a href="{{ path_for('directory') }}"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Les répertoires</a></li>
+            <li><a href="{{ path_for('settings') }}"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Paramètres</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ path_for('profil') }}"><span class="glyphicon glyphicon-user"></span> {{ auth.email }}</a></li>
-            {% if auth.rank == "admin" %}
-              <li><a href="{{ path_for('admin') }}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Administration</a></li>
-            {% endif %}
+            <li><a href="{{ path_for('home') }}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Revenir sur l'application</a></li>
             <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Se déconnecter</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->

@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class PostTable extends AbstractSeed
+class AddSetting extends AbstractSeed
 {
     /**
      * Run Method.
@@ -14,12 +14,9 @@ class PostTable extends AbstractSeed
      */
     public function run()
     {
-      $articles = [];
-      for ($i = 1; $i < 5; $i++) {
-        $articles[] = [
-          'name' => 'Article '.$i
-        ];
-      }
-      $this->insert('posts', $articles);
+      $size = array(
+        'upload_size' => 1073741824
+      );
+      $this->insert('settings', $size);
     }
 }

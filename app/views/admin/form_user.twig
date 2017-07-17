@@ -1,0 +1,49 @@
+{% extends "admin.twig" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>{{ title }}</h2>
+    <form class="form-group" action="" method="post">
+      {{ csrf() }}
+      <div class="form-group {% if alert.errors.email %} has-error{% endif %}">
+        <label class="control-label" for="email">Adresse email :</label>
+        <input class="form-control" type="email" name="email" value="{% if alert.errors.email %}{{ old.email }}{% elseif user %}{{ user.email }}{% endif %}" id="email">
+        {% if alert.errors.email %}
+          <span class="help-block">{{ alert.errors.email }}</span>
+        {% endif %}
+      </div>
+
+      <div class="form-group {% if alert.errors.password %} has-error{% endif %}">
+        <label class="control-label" for="password">{% if user %}Nouveau mot de passe{% else %}Mot de passe{% endif %} :</label>
+        <input class="form-control" type="password" name="password" id="password">
+        {% if alert.errors.password %}
+          <span class="help-block">{{ alert.errors.password }}</span>
+        {% endif %}
+      </div>
+
+      <div class="form-group {% if alert.errors.password %} has-error{% endif %}">
+        <label class="control-label" for="password_confirm">Confirmer le mot de passe :</label>
+        <input class="form-control" type="password" name="password_confirm" id="password_confirm">
+      </div>
+
+      <div class="form-group">
+        <label class="control-label" for="rank">Grade :</label>
+        <select class="form-control" name="rank" id="rank">
+          {% for rank in ranks %}
+            <option value="{{ rank.id }}" {% if user and user.id_rank == rank.id %}selected{% elseif rank.name == "utilisateur" and user is null %}selected{% endif %}>{{ rank.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      {% if user %}
+      <input type="hidden" name="id" value="{{ user.id }}">
+      {% endif %}
+
+      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Enregistrer</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -8,21 +8,37 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 
 ## Objectifs
 
-- [ ] Comptes utilisateur.
-- [ ] Panel d'administration.
-- [ ] Upload de fichiers.
+- [x] Comptes utilisateur.
+- [ ] Upload de fichiers dans les répertoires utilisateur.
+- [x] Bar de progression d'upload.
 - [ ] Téléchargement des fichiers.
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
 - [ ] Partage de dossier entre utilisateur.
-- [ ] Possibilité d'accès à des répertoires du serveur.
-- [ ] Mise en place de logs au panel admin.
+- [ ] Partage de répertoires du serveur.
+
+- [x] Panel d'administration.
+- [x] Mise en place de logs au panel admin.
+- [x] Ajout/Edition/Suppression des comptes utilisateur au panel admin.
+- [ ] Ajout/Edition/Suppression de répertoires du serveur au panel admin.
+- [ ] Modification des paramètres d'application au panel admin.
+
+- [ ] Mise en place d'une pagination pour les listes.
 
 
-## Pre-requis
+## Pre-requis/configuration
 
 - php 5.6+
   - extension pdo
-  - extension mbstring  
+  - extension mbstring
+  - php.ini
+    - session.upload.progress = On;
+
+- php 7+
+  - reprendre la config de php 5.6+
+  - installer APCu
+
+- nginx
+  - proxy_request_buffering off;
 
 
 ## Librairies/outils
