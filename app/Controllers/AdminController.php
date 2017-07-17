@@ -98,6 +98,10 @@ class AdminController extends Controller {
               'id_rank' => $rank_id
             ]);
 
+            $user_id = $this->medoo->id();
+
+            $this->new_directory($user_id);
+
             $this->addLog("Le compte ".$_POST['email']." a été créé");
             $this->alert('Le compte utilisateur a bien été créé');
             return $this->redirect($response, 'users');
@@ -281,6 +285,9 @@ class AdminController extends Controller {
         $this->medoo->delete("users", [
           "id" => $id
         ]);
+
+        $this->clear_directory($id);
+        $this->remove_directory($id);
         $this->addLog("Le compte ".$search[0]['email']." a été supprimé");
         $this->alert('Le compte utilisateur a bien été supprimé');
         return $this->redirect($response, 'users');
