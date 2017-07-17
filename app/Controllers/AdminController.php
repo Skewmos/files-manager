@@ -25,7 +25,38 @@ class AdminController extends Controller {
   }
 
   public function postSettings(RequestInterface $request, ResponseInterface $response) {
+    $errors = array();
+    if(isset($_POST['size']) && !empty($_POST['size'])){
+      if(isset($_POST['format']) && !empty($_POST['format'])){
+        $format = $_POST['format'];
+      }else{
+        $format = "mo";
+      }
+      Validator::intVal()->validate($_POST['size']) || $errors['size'] = 'La taille doit-être un nombre numérique';
 
+      if(!empty($errors)){
+        $this->alert($errors, 'errors');
+        return $this->redirect($response, 'settings');
+      }else{
+        if($format === "mo"){
+          $this->addLog("La taille max d'upload est passée à ".$_POST['size']."Mo");
+          $this->medoo->update('settings', [
+            "upload_size" => $this->moConvert($_POST['size'])
+          ]);
+        }elseif($format === "go"){
+          $this->addLog("La taille max d'upload est passée à ".$_POST['size']."Go");
+          $this->medoo->update('settings', [
+            "upload_size" => $this->goConvert($_POST['size'])
+          ]);
+        }
+        $this->alert('Paramètres enregistrés');
+        return $this->redirect($response, 'settings');
+      }
+
+    }else{
+      $this->alert('Aucune configuration n\'a été envoyé', 'danger');
+      return $this->redirect($response, 'settings');
+    }
   }
 
   public function getUsers(RequestInterface $request, ResponseInterface $response) {
@@ -47,7 +78,7 @@ class AdminController extends Controller {
   }
 
   public function postAddUser(RequestInterface $request, ResponseInterface $response) {
-    $errors = [];
+    $errors = array();
     if(isset($_POST['email']) && !empty($_POST['email'])){
       Validator::email()->validate($_POST['email']) || $errors['email'] = 'L\'email est invalide';
     }else{
@@ -168,7 +199,7 @@ class AdminController extends Controller {
         ]);
 
         if(!empty($user)){
-          $errors = [];
+          $errors = array();
           if(isset($_POST['email']) && !empty($_POST['email'])){
             Validator::email()->validate($_POST['email']) || $errors['email'] = 'L\'email est invalide';
           }else{

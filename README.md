@@ -9,18 +9,19 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 ## Objectifs
 
 - [x] Comptes utilisateur.
+- [x] Répertoires utilisateur.
 - [ ] Upload de fichiers dans les répertoires utilisateur.
 - [x] Bar de progression d'upload.
 - [ ] Téléchargement des fichiers.
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
-- [ ] Partage de dossier entre utilisateur.
 - [ ] Partage de répertoires du serveur.
+- [ ] Partage de dossier entre utilisateur.
 
 - [x] Panel d'administration.
 - [x] Mise en place de logs au panel admin.
 - [x] Ajout/Edition/Suppression des comptes utilisateur au panel admin.
 - [ ] Ajout/Edition/Suppression de répertoires du serveur au panel admin.
-- [ ] Modification des paramètres d'application au panel admin.
+- [x] Modification des paramètres d'application au panel admin.
 
 - [ ] Mise en place d'une pagination pour les listes.
 

@@ -17,7 +17,7 @@ class HomeController extends Controller {
   }
 
   public function postProfil(RequestInterface $request, ResponseInterface $response) {
-    $errors = [];
+    $errors = array();
     Validator::email()->validate($_POST['email']) || $errors['email'] = 'Votre email est invalide';
 
     // On continue si l'email est valide
