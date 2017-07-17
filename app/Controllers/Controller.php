@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Respect\Validation\Validator;
 
 class Controller {
 
@@ -70,7 +71,8 @@ class Controller {
         'pdf', 'xls', 'csv', 'txt', 'odt', 'doc',
         'jpg', 'jpeg', 'png', 'bmp', 'gif',
         'mp4', 'mkv', 'avi', 'wmv',
-        'mp3', 'flac', 'ogg', 'wma'
+        'mp3', 'flac', 'ogg', 'wma',
+        'zip', 'tar.gz'
       );
     }
 

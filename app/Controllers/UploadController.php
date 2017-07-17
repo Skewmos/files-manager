@@ -36,20 +36,31 @@ class UploadController extends Controller
         $this->alert('Le fichier est trop grand', 'danger');
         return $this->redirect($response, 'upload');
       }else{
-        $file = $_FILES["file"]["name"];
+        $file_name = $_FILES['file']['name'];
+        $size_file = $_FILES["file"]["size"];
+        $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        if(in_array($extension, $this->getformats())){
+          $id_user = $_SESSION['auth']['id'];
+          $this->medoo->insert('files',[
+            'name' => $file_name,
+            'weight' => $this->fileSizeConvert($size_file),
+            'format' => $extension,
+            'id_user' => $id_user
+          ]);
 
-        $file_exist = false;
-        $this->medoo->select("files");
+          $id_file = $this->medoo->id();
 
-        $req = $pdo->query("SELECT * FROM files WHERE id_directory = $directory_id");
-        while($data = $req->fetch()){
-          if($_FILES['file']['name'] == $data->name){
-            $file_exist = true;
-          }
+          $target_file = "directory/".$id_user."/".$id_file.".".$extension;
+          move_uploaded_file($_FILES['file']["tmp_name"], $target_file);
+
+          $this->addLog($_SESSION['auth']['email']." à uploadé un fichier nommé ".$file_name);
+          $this->alert('Le fichier a bien été uploadé');
+          return $this->redirect($response, 'home');
+        }else{
+          $this->alert('Le format du fichier n\'est pas autorisé', 'danger');
+          return $this->redirect($response, 'upload');
         }
 
-        $this->alert('Le fichier a bien été uploadé');
-        return $this->redirect($response, 'home');
       }
     }
   }

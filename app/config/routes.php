@@ -19,8 +19,9 @@ $app->group('', function () {
   // Route logout
   $this->get('/logout', AuthController::class. ':getLogout')->setName('logout');
 
-  // Route répertoire personnel
+  // Routes répertoire personnel
   $this->get('/', HomeController::class. ':getHome')->setName('home');
+  $this->get('/delete/{id}', HomeController::class. ':getDelFile')->setName('del_file');
 
   // Routes profil
   $this->get('/profil', HomeController::class. ':getProfil')->setName('profil');

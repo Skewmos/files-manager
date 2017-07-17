@@ -8,8 +8,12 @@ use Respect\Validation\Validator;
 class HomeController extends Controller {
 
   public function getHome(RequestInterface $request, ResponseInterface $response) {
-    r($_SESSION);
-    $this->render($response, 'pages/home.twig');
+    $params = array();
+    $files = $this->medoo->select("files", "*",[
+      "id_user" => $_SESSION['auth']['id']
+    ]);
+    $params['files'] = $files;
+    $this->render($response, 'pages/home.twig', $params);
   }
 
   public function getProfil(RequestInterface $request, ResponseInterface $response) {
@@ -90,5 +94,41 @@ class HomeController extends Controller {
       return $this->redirect($response, 'profil', 400);
     }
 
+  }
+
+  public function getDelFile(RequestInterface $request, ResponseInterface $response) {
+    $id = $request->getAttribute('id');
+    if(Validator::intVal()->validate($id)){
+
+      $file = $this->medoo->select('files', "*",[
+        "id" => $id
+      ]);
+
+      if(!empty($file)){
+        if(file_exists('directory/'.$file[0]['id_user'].'/'.$file[0]['id'].".".$file[0]['format'])){
+          if(!unlink('directory/'.$file[0]['id_user'].'/'.$file[0]['id'].".".$file[0]['format'])){
+            $this->alert("Impossible de supprimer le fichier, vérifier les permissions", 'danger');
+            return $this->redirect($response, 'home');
+          }else{
+            $this->medoo->delete('files',[
+              "id" => $id
+            ]);
+            $this->addLog("Le fichier ".$file[0]['name']." du répertoire de ".$_SESSION['auth']['email']." a été supprimé");
+            $this->alert('Le fichier a bien été supprimé');
+            return $this->redirect($response, 'home');
+          }
+        }else{
+          $this->alert("Impossible de supprimer le fichier, fichier introuvable dans le répertoire", 'danger');
+          return $this->redirect($response, 'home');
+        }
+      }else{
+        $this->alert("Impossible de supprimer le fichier, fichier introuvable en base de données", 'danger');
+        return $this->redirect($response, 'home');
+      }
+
+    }else{
+      $this->alert('Id du fichier est invalide', "danger");
+      return $this->redirect($response, 'home');
+    }
   }
 }

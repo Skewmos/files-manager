@@ -10,7 +10,7 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 
 - [x] Comptes utilisateur.
 - [x] Répertoires utilisateur.
-- [ ] Upload de fichiers dans les répertoires utilisateur.
+- [x] Upload de fichiers dans les répertoires utilisateur.
 - [x] Bar de progression d'upload.
 - [ ] Téléchargement des fichiers.
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
