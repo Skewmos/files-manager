@@ -24,8 +24,9 @@
       <td>{{ user.name }}</td>
       <td>
         <a href="{{ path_for('edit_user', {'id': user.id}) }}" class="btn btn-warning"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-        <a href="{{ path_for('del_user', {'id': user.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes vous sur ?');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-      </tr>
+        <a href="{{ path_for('del_user', {'id': user.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes vous sûr de vouloir supprimer le compte {{ user.email }} ?');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+      </td>
+    </tr>
   {% else %}
     <tr>
       <td colspan="4">Pas d'utilisateur pour le moment.</td>

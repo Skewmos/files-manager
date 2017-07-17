@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Respect\Validation\Validator;
 
 class Controller {
 
@@ -70,7 +71,8 @@ class Controller {
         'pdf', 'xls', 'csv', 'txt', 'odt', 'doc',
         'jpg', 'jpeg', 'png', 'bmp', 'gif',
         'mp4', 'mkv', 'avi', 'wmv',
-        'mp3', 'flac', 'ogg', 'wma'
+        'mp3', 'flac', 'ogg', 'wma',
+        'zip', 'tar.gz', 'rar', 'gzip', 'iso'
       );
     }
 
@@ -83,6 +85,43 @@ class Controller {
         $ip = $_SERVER['REMOTE_ADDR'];
       }
      return $ip;
+    }
+
+    public function new_directory($name){
+      if(!file_exists('directory/'.$name)){
+        if(!mkdir('directory/'.$name, 0775, true)){
+          $this->alert("Impossible de créer le répertoire, vérifier les permissions", 'danger');
+        }else{
+          fopen("directory/".$name."/.gitkeep", "w+");
+        }
+      }
+    }
+
+    public function clear_directory($name){
+      $id = trim($name, "'");
+      if(file_exists('directory/'.$id) && is_dir('directory/'.$id)){
+        if($handle = opendir('directory/'.$id)){
+          while(false !== ($entry = readdir($handle))){
+            if($entry != "." && $entry != ".."){
+              if(isset($entry)){
+                unlink('directory/'.$id.'/'.$entry);
+              }
+            }
+          }
+        }
+        closedir($handle);
+      }else{
+        $this->alert("Impossible de supprimer le contenu du répertoire, le répertoire n'existe pas", 'danger');
+      }
+    }
+
+    function remove_directory($name){
+      $id = trim($name, "'");
+      if(file_exists('directory/'.$id)){
+        if(!rmdir('directory/'.$id)){
+          $this->alert("Impossible de supprimer le répertoire, vérifier les permissions", 'danger');
+        }
+      }
     }
 
     public function addLog($message) {

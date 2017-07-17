@@ -12,15 +12,16 @@ $app->get('/login', AuthController::class. ':getLogin')->setName('login');
 $app->post('/login', AuthController::class. ':postLogin');
 
 
-////////////// Routes accessibles par les utilisateur uniquement /////////////
+////////////// Routes accessibles par les utilisateurs uniquement /////////////
 // Middleware pour checker la session utilisateur
 $app->group('', function () {
 
   // Route logout
   $this->get('/logout', AuthController::class. ':getLogout')->setName('logout');
 
-  // Route répertoire personnel
+  // Routes répertoire personnel
   $this->get('/', HomeController::class. ':getHome')->setName('home');
+  $this->get('/delete/{id}', HomeController::class. ':getDelFile')->setName('del_file');
 
   // Routes profil
   $this->get('/profil', HomeController::class. ':getProfil')->setName('profil');
@@ -41,11 +42,11 @@ $app->group('', function () {
   // Route logs admin
   $this->get('/admin', AdminController::class. ':getLog')->setName('admin');
 
-  // Route settings admin
+  // Routes settings admin
   $this->get('/admin/settings', AdminController::class. ':getSettings')->setName('settings');
   $this->post('/admin/settings', AdminController::class. ':postSettings');
 
-  // Route users admin
+  // Routes users admin
   $this->get('/admin/users', AdminController::class. ':getUsers')->setName('users');
   $this->post('/admin/users', AdminController::class. ':postUsers');
   $this->get('/admin/add_user', AdminController::class. ':getAddUser')->setName('add_user');
@@ -55,9 +56,14 @@ $app->group('', function () {
   $this->post('/admin/edit_user/{id}', AdminController::class. ':postEditUser');
   $this->get('/admin/del_user/{id}', AdminController::class. ':getDelUser')->setName('del_user');
 
-  // Route directory admin
+  // Routes directory admin
   $this->get('/admin/directory', AdminController::class. ':getDirectory')->setName('directory');
-  $this->post('/admin/directory', AdminController::class. ':postDirectory');
+
+  $this->get('/admin/add_directory', AdminController::class. ':getAddDirectory')->setName('add_directory');
+  $this->post('/admin/add_directory', AdminController::class. ':postAddDirectory');
+
+  $this->get('/admin/edit_directory', AdminController::class. ':getEditDirectory')->setName('edit_directory');
+  $this->post('/admin/edit_directory', AdminController::class. ':postEditDirectory');
 
 })
 ->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container))

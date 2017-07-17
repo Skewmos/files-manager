@@ -25,7 +25,38 @@ class AdminController extends Controller {
   }
 
   public function postSettings(RequestInterface $request, ResponseInterface $response) {
+    $errors = array();
+    if(isset($_POST['size']) && !empty($_POST['size'])){
+      if(isset($_POST['format']) && !empty($_POST['format'])){
+        $format = $_POST['format'];
+      }else{
+        $format = "mo";
+      }
+      Validator::intVal()->validate($_POST['size']) || $errors['size'] = 'La taille doit-être un nombre numérique';
 
+      if(!empty($errors)){
+        $this->alert($errors, 'errors');
+        return $this->redirect($response, 'settings');
+      }else{
+        if($format === "mo"){
+          $this->addLog("La taille max d'upload est passée à ".$_POST['size']."Mo");
+          $this->medoo->update('settings', [
+            "upload_size" => $this->moConvert($_POST['size'])
+          ]);
+        }elseif($format === "go"){
+          $this->addLog("La taille max d'upload est passée à ".$_POST['size']."Go");
+          $this->medoo->update('settings', [
+            "upload_size" => $this->goConvert($_POST['size'])
+          ]);
+        }
+        $this->alert('Paramètres enregistrés');
+        return $this->redirect($response, 'settings');
+      }
+
+    }else{
+      $this->alert('Aucune configuration n\'a été envoyé', 'danger');
+      return $this->redirect($response, 'settings');
+    }
   }
 
   public function getUsers(RequestInterface $request, ResponseInterface $response) {
@@ -47,7 +78,7 @@ class AdminController extends Controller {
   }
 
   public function postAddUser(RequestInterface $request, ResponseInterface $response) {
-    $errors = [];
+    $errors = array();
     if(isset($_POST['email']) && !empty($_POST['email'])){
       Validator::email()->validate($_POST['email']) || $errors['email'] = 'L\'email est invalide';
     }else{
@@ -98,6 +129,10 @@ class AdminController extends Controller {
               'id_rank' => $rank_id
             ]);
 
+            $user_id = $this->medoo->id();
+
+            $this->new_directory($user_id);
+
             $this->addLog("Le compte ".$_POST['email']." a été créé");
             $this->alert('Le compte utilisateur a bien été créé');
             return $this->redirect($response, 'users');
@@ -132,8 +167,8 @@ class AdminController extends Controller {
 
   public function getEditUser(RequestInterface $request, ResponseInterface $response) {
     $params = array();
-    $id = intval($request->getAttribute('id'));
-    if($id != 0){
+    $id = $request->getAttribute('id');
+    if(Validator::intVal()->validate($id)){
       $search = $this->medoo->select('users', "*",[
         "id" => $id
       ]);
@@ -156,15 +191,15 @@ class AdminController extends Controller {
 
   public function postEditUser(RequestInterface $request, ResponseInterface $response) {
     if(isset($_POST['id']) && !empty($_POST['id'])){
-      $id = intval($_POST['id']);
+      $id = $_POST['id'];
 
-      if($id != 0){
+      if(Validator::intVal()->validate($id)){
         $user = $this->medoo->select("users", "*",[
           "id" => $id
         ]);
 
         if(!empty($user)){
-          $errors = [];
+          $errors = array();
           if(isset($_POST['email']) && !empty($_POST['email'])){
             Validator::email()->validate($_POST['email']) || $errors['email'] = 'L\'email est invalide';
           }else{
@@ -272,8 +307,8 @@ class AdminController extends Controller {
   }
 
   public function getDelUser(RequestInterface $request, ResponseInterface $response) {
-    $id = intval($request->getAttribute('id'));
-    if($id != 0){
+    $id = $request->getAttribute('id');
+    if(Validator::intVal()->validate($id)){
       $search = $this->medoo->select("users", "*",[
         "id" => $id
       ]);
@@ -281,6 +316,9 @@ class AdminController extends Controller {
         $this->medoo->delete("users", [
           "id" => $id
         ]);
+
+        $this->clear_directory($id);
+        $this->remove_directory($id);
         $this->addLog("Le compte ".$search[0]['email']." a été supprimé");
         $this->alert('Le compte utilisateur a bien été supprimé');
         return $this->redirect($response, 'users');

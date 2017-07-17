@@ -11,7 +11,12 @@ class UploadController extends Controller
   {
     $params = array();
     if(isset($_SESSION['upload_progress_uploadform'])){
-      $_SESSION['upload_progress_uploadform']['bytes_processed'] = 0;
+      if($_SESSION['upload_progress_uploadform']['content_length'] === $_SESSION['upload_progress_uploadform']['bytes_processed']){
+        unset($_SESSION['upload_progress_uploadform']);
+        $upload = false;
+      }else{
+        $upload = true;
+      }
     }
 
     $size = $this->medoo->select('settings', 'upload_size');
@@ -22,8 +27,11 @@ class UploadController extends Controller
     $formats = implode(", ", $formats);
     $params['formats'] = $formats;
 
-    $params['id_upload'] = ini_get("session.upload_progress.name");
-    r($_SESSION);
+    if($upload === true){
+      $params['upload_en_cours'] = true;
+    }else{
+      $params['id_upload'] = ini_get("session.upload_progress.name");
+    }
     $this->render($response, 'pages/upload.twig', $params);
   }
 
@@ -34,8 +42,34 @@ class UploadController extends Controller
       $maxUploadSize = $size[0];
 
       if($_FILES["file"]["size"] > $maxUploadSize){
-        $this->alert('Le fichier est trop grand !', 'danger');
+        $this->alert('Le fichier est trop grand', 'danger');
         return $this->redirect($response, 'upload');
+      }else{
+        $file_name = $_FILES['file']['name'];
+        $size_file = $_FILES["file"]["size"];
+        $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        if(in_array($extension, $this->getformats())){
+          $id_user = $_SESSION['auth']['id'];
+          $this->medoo->insert('files',[
+            'name' => $file_name,
+            'weight' => $this->fileSizeConvert($size_file),
+            'format' => $extension,
+            'id_user' => $id_user
+          ]);
+
+          $id_file = $this->medoo->id();
+
+          $target_file = "directory/".$id_user."/".$id_file.".".$extension;
+          move_uploaded_file($_FILES['file']["tmp_name"], $target_file);
+
+          $this->addLog($_SESSION['auth']['email']." à uploadé un fichier nommé ".$file_name);
+          $this->alert('Le fichier a bien été uploadé');
+          return $this->redirect($response, 'home');
+        }else{
+          $this->alert('Le format du fichier n\'est pas autorisé', 'danger');
+          return $this->redirect($response, 'upload');
+        }
+
       }
     }
   }
