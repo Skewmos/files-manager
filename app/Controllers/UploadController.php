@@ -23,7 +23,6 @@ class UploadController extends Controller
     $params['formats'] = $formats;
 
     $params['id_upload'] = ini_get("session.upload_progress.name");
-    r($_SESSION);
     $this->render($response, 'pages/upload.twig', $params);
   }
 
@@ -34,8 +33,23 @@ class UploadController extends Controller
       $maxUploadSize = $size[0];
 
       if($_FILES["file"]["size"] > $maxUploadSize){
-        $this->alert('Le fichier est trop grand !', 'danger');
+        $this->alert('Le fichier est trop grand', 'danger');
         return $this->redirect($response, 'upload');
+      }else{
+        $file = $_FILES["file"]["name"];
+
+        $file_exist = false;
+        $this->medoo->select("files");
+
+        $req = $pdo->query("SELECT * FROM files WHERE id_directory = $directory_id");
+        while($data = $req->fetch()){
+          if($_FILES['file']['name'] == $data->name){
+            $file_exist = true;
+          }
+        }
+
+        $this->alert('Le fichier a bien été uploadé');
+        return $this->redirect($response, 'home');
       }
     }
   }

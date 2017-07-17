@@ -167,8 +167,8 @@ class AdminController extends Controller {
 
   public function getEditUser(RequestInterface $request, ResponseInterface $response) {
     $params = array();
-    $id = intval($request->getAttribute('id'));
-    if($id != 0){
+    $id = $request->getAttribute('id');
+    if(Validator::intVal()->validate($id)){
       $search = $this->medoo->select('users', "*",[
         "id" => $id
       ]);
@@ -191,9 +191,9 @@ class AdminController extends Controller {
 
   public function postEditUser(RequestInterface $request, ResponseInterface $response) {
     if(isset($_POST['id']) && !empty($_POST['id'])){
-      $id = intval($_POST['id']);
+      $id = $_POST['id'];
 
-      if($id != 0){
+      if(Validator::intVal()->validate($id)){
         $user = $this->medoo->select("users", "*",[
           "id" => $id
         ]);
@@ -307,8 +307,8 @@ class AdminController extends Controller {
   }
 
   public function getDelUser(RequestInterface $request, ResponseInterface $response) {
-    $id = intval($request->getAttribute('id'));
-    if($id != 0){
+    $id = $request->getAttribute('id');
+    if(Validator::intVal()->validate($id)){
       $search = $this->medoo->select("users", "*",[
         "id" => $id
       ]);
