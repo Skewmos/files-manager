@@ -24,7 +24,9 @@ class HomeController extends Controller {
     if(empty($errors)){
 
       // On vérifie si aucun autre utilisateur ne possède cet email
-      $search = $this->medoo->select('users', '*',[
+      $search = $this->medoo->select('users', [
+        'email'
+      ],[
         'email' => $_POST['email'],
         'id[!]' => $_SESSION['auth']['id']
       ]);
@@ -77,7 +79,7 @@ class HomeController extends Controller {
            return $this->redirect($response, 'profil');
         }else{
           // Si les 2 champs ne sont pas rempli, terminer
-          $this->alert('Votre compte as été mise à jour');
+          $this->alert('Votre compte a été mise à jour');
           return $this->redirect($response, 'profil');
         }
       }

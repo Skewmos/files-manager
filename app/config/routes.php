@@ -48,6 +48,12 @@ $app->group('', function () {
   // Route users admin
   $this->get('/admin/users', AdminController::class. ':getUsers')->setName('users');
   $this->post('/admin/users', AdminController::class. ':postUsers');
+  $this->get('/admin/add_user', AdminController::class. ':getAddUser')->setName('add_user');
+  $this->post('/admin/add_user', AdminController::class. ':postAddUser');
+
+  $this->get('/admin/edit_user/{id}', AdminController::class. ':getEditUser')->setName('edit_user');
+  $this->post('/admin/edit_user/{id}', AdminController::class. ':postEditUser');
+  $this->get('/admin/del_user/{id}', AdminController::class. ':getDelUser')->setName('del_user');
 
   // Route directory admin
   $this->get('/admin/directory', AdminController::class. ':getDirectory')->setName('directory');
