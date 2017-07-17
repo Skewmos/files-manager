@@ -70,7 +70,7 @@ class AuthController extends Controller {
               "rank" => $rank
             );
 
-            $this->addLog($user[0]['email']." c'est connecté");
+            $this->addLog($user[0]['email']." s'est connecté");
 
             return $this->redirect($response, 'home');
           }else{

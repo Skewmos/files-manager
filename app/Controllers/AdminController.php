@@ -12,7 +12,6 @@ class AdminController extends Controller {
       "ORDER" => ["date" => "DESC"],
       "LIMIT" => 15
     ]);
-    r($logs);
     $params['logs'] = $logs;
     $this->render($response, 'admin/logs.twig', $params);
   }
@@ -30,6 +29,12 @@ class AdminController extends Controller {
 
   public function getUsers(RequestInterface $request, ResponseInterface $response) {
     $params = array();
+    $users = $this->medoo->select('users', [
+      "[><]ranks" => ["id_rank" => "id"]
+    ],[
+      "users.id", "users.email", "ranks.name"
+    ]);
+    $params['users'] = $users;
     $this->render($response, 'admin/users.twig', $params);
   }
 

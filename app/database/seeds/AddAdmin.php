@@ -15,7 +15,12 @@ class AddAdmin extends AbstractSeed
     public function run()
     {
       $rank = array(
-        'name' => 'admin'
+        'name' => 'admin',
+      );
+      $this->insert('ranks', $rank);
+
+      $rank = array(
+        'name' => 'utilisateur'
       );
       $this->insert('ranks', $rank);
 
