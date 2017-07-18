@@ -51,7 +51,7 @@ class AuthMiddleware {
                 "rank" => $rank
               );
 
-              setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 2);
+              setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 1); // Cookie d'une durée de vie d'un jour
               return $response->withRedirect($this->container->router->pathFor('home'));
             }else{
               // Si cookie non valide, rediriger vers login

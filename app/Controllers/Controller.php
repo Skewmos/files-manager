@@ -69,7 +69,7 @@ class Controller {
     public function getformats(){
       return array(
         'pdf', 'xls', 'csv', 'txt', 'odt', 'doc',
-        'jpg', 'jpeg', 'png', 'bmp', 'gif',
+        'jpg', 'jpeg', 'png', 'bmp', 'gif', 'ico',
         'mp4', 'mkv', 'avi', 'wmv',
         'mp3', 'flac', 'ogg', 'wma',
         'zip', 'tar.gz', 'rar', 'gzip', 'iso'

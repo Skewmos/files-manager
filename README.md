@@ -121,6 +121,8 @@ $ vendor/bin/phinx migrate
 $ vendor/bin/phinx seed:run
 ```
 
+Le compte administrateur est `admin@admin.fr` avec comme mot de passe `admin`, une fois l'installation complété, vous pourrez vous connecter et changer les informations du compte.
+
 
 ## Permissions
 

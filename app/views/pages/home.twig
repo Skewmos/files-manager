@@ -20,22 +20,22 @@
       <td>
         <div class="btn-group">
           <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></a>
-          {% if file.format == "mp4" %}
+          {% if file.format == "mp4" %}<!-- Fichier vidéo -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#"><span class="glyphicon glyphicon-film"></span> Regarder</a></li>
             </ul>
-          {% elseif file.format == "mp3" %}
+          {% elseif file.format == "mp3" %}<!-- Fichier audio -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#"><span class="glyphicon glyphicon-headphones"></span> Écouter</a></li>
             </ul>
-          {% elseif file.format == "png" or file.format == "jpg" or file.format == "jpeg" or file.format == "gif" or file.format == "bmp" %}
+          {% elseif file.format == "png" or file.format == "jpg" or file.format == "jpeg" or file.format == "gif" or file.format == "bmp" or file.format == "ico" %}<!-- Fichier image -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Afficher</a></li>
             </ul>
-          {% elseif file.format == "pdf" %}
+          {% elseif file.format == "pdf" %}<!-- Fichier pdf -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span> Afficher</a></li>
