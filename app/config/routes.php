@@ -23,6 +23,9 @@ $app->group('', function () {
   $this->get('/', HomeController::class. ':getHome')->setName('home');
   $this->get('/delete/{id}', HomeController::class. ':getDelFile')->setName('del_file');
 
+  // Routes des répertoires partagés
+  $this->get('/dir', HomeController::class. ':getDirectory')->setName('dir');
+
   // Routes profil
   $this->get('/profil', HomeController::class. ':getProfil')->setName('profil');
   $this->post('/profil', HomeController::class. ':postProfil');
@@ -57,13 +60,13 @@ $app->group('', function () {
   $this->get('/admin/del_user/{id}', AdminController::class. ':getDelUser')->setName('del_user');
 
   // Routes directory admin
-  $this->get('/admin/directory', AdminController::class. ':getDirectory')->setName('directory');
+  $this->get('/admin/dir', AdminController::class. ':getDirectory')->setName('admin_dir');
 
-  $this->get('/admin/add_directory', AdminController::class. ':getAddDirectory')->setName('add_directory');
-  $this->post('/admin/add_directory', AdminController::class. ':postAddDirectory');
+  $this->get('/admin/add_dir', AdminController::class. ':getAddDirectory')->setName('add_dir');
+  $this->post('/admin/add_dir', AdminController::class. ':postAddDirectory');
 
-  $this->get('/admin/edit_directory', AdminController::class. ':getEditDirectory')->setName('edit_directory');
-  $this->post('/admin/edit_directory', AdminController::class. ':postEditDirectory');
+  $this->get('/admin/edit_dir', AdminController::class. ':getEditDirectory')->setName('edit_dir');
+  $this->post('/admin/edit_dir', AdminController::class. ':postEditDirectory');
 
 })
 ->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container))

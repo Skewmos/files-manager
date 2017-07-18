@@ -13,9 +13,8 @@ class UploadController extends Controller
     if(isset($_SESSION['upload_progress_uploadform'])){
       if($_SESSION['upload_progress_uploadform']['content_length'] === $_SESSION['upload_progress_uploadform']['bytes_processed']){
         unset($_SESSION['upload_progress_uploadform']);
-        $upload = false;
       }else{
-        $upload = true;
+        $params['upload_en_cours'] = true;
       }
     }
 
@@ -27,11 +26,7 @@ class UploadController extends Controller
     $formats = implode(", ", $formats);
     $params['formats'] = $formats;
 
-    if($upload === true){
-      $params['upload_en_cours'] = true;
-    }else{
-      $params['id_upload'] = ini_get("session.upload_progress.name");
-    }
+    $params['id_upload'] = ini_get("session.upload_progress.name");
     $this->render($response, 'pages/upload.twig', $params);
   }
 

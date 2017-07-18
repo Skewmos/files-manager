@@ -131,4 +131,9 @@ class HomeController extends Controller {
       return $this->redirect($response, 'home');
     }
   }
+
+  public function getDirectory(RequestInterface $request, ResponseInterface $response) {
+    $this->render($response, 'pages/directory.twig');
+  }
+
 }
