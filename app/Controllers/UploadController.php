@@ -69,16 +69,4 @@ class UploadController extends Controller
     }
   }
 
-  public function getUploadProgress(RequestInterface $request, $response)
-  {
-    if (isset($_SESSION["upload_progress_uploadform"]) && !empty($_SESSION["upload_progress_uploadform"])) {
-      $current = $_SESSION["upload_progress_uploadform"]["bytes_processed"];
-      $total = $_SESSION["upload_progress_uploadform"]["content_length"];
-      echo $current < $total ? ceil($current / $total * 100) : 100;
-    }
-    else {
-      echo 100;
-    }
-  }
-
 }

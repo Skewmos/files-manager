@@ -24,3 +24,8 @@
 .glyphicon-heart {
   color: red;
 }
+
+/* Progress Bar */
+.progress {
+  height: 16px;
+}

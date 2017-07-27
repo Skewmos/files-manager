@@ -38,27 +38,9 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
     - `upload_tmp_dir = tmp`
     - `post_max_size = (your_max_upload)M`
     - `upload_max_filesize = (your_max_upload)M`
-- php7+
-  - extension apc
-  - extension igbinary
-  - php.ini
-    - `extension = php_apc.dll`
-    - `apc.enabled = 1`
-    - `apc.rfc1867 = On`
-    - `apc.shm_size = 64M`
-    - `apc.max_file_size = (your_max_upload)M`
 
 - nginx
   - `client_max_body_size (your_max_upload)m;`
-
-
-
-Liens pour l'extension apc:
-
-[stackoverflow lien 1](https://stackoverflow.com/questions/36129259/php7-with-apcu-call-to-undefined-function-apc-fetch)
-
-[stackoverflow lien 2](https://stackoverflow.com/questions/34170434/how-install-apcu-as-php7-extension-on-debian#34574583)
-
 
 
 ### Configuration nginx :

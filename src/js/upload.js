@@ -6,7 +6,6 @@ $(document).on('click', '.browse', function(){
   var file = $(this).parent().parent().parent().find('.file');
   file.trigger('click');
 });
-
 $(document).on('change', '.file', function(){
   $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
 
@@ -16,23 +15,13 @@ $(document).on('change', '.file', function(){
 
     $("button#btnSubmit").hide();
   }else{
+    $('div.progress').show();
     $('span#alertFile').hide();
 
     $("button#btnSubmit").show();
   }
 
 });
-
-function redirection() {
-  window.location.assign(redirection);
-}
-
-function sendRequest() {
-    var http = createRequestObject();
-    http.open("GET", urlAjax);
-    http.onreadystatechange = function () { handleResponse(http); };
-    http.send(null);
-}
 
 function findSize() {
     var fileInput =  document.getElementById("file");
@@ -45,38 +34,36 @@ function findSize() {
         return fileSize;
     }
 }
-
-
-function createRequestObject() {
-    var http;
-    if (navigator.appName == "Microsoft Internet Explorer") {
-        http = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else {
-        http = new XMLHttpRequest();
-    }
-    return http;
+function redirection() {
+  window.location.assign(urlRedirect);
 }
 
+(function() {
 
-function handleResponse(http) {
-    var response;
-    if (http.readyState == 4) {
-        response = http.responseText;
-        document.getElementById("progress-bar").style.width = response + "%";
-        document.getElementById("progress-bar").innerHTML = response + "%";
+var percent = $('div.progress-bar');
+var status = $('#status');
+var error = 0;
+$('form').ajaxForm({
+    beforeSend: function() {
+      status.empty();
+        var percentVal = '0%';
+        percent.width(percentVal)
+        percent.html(percentVal);
+    },
+    uploadProgress: function(event, position, total, percentComplete) {
+        var percentVal = percentComplete + '%';
+        percent.width(percentVal)
+        percent.html(percentVal);
+    },
+    success: function() {
+        var percentVal = '100%';
+        percent.width(percentVal)
+        percent.html(percentVal);
+    },
+	complete: function(xhr) {
+      status.html('<span class="label label-success">Fichier uploadé !</span>');
+      setTimeout(redirection, 1000);
+	}
+});
 
-        if (response < 100) {
-            setTimeout("sendRequest()", 3000);
-        }
-    }
-}
-
-function startUpload() {
-    $('div.progress').show();
-    setTimeout("sendRequest()", 3000);
-}
-
-(function () {
-    document.getElementById("uploadform").onsubmit = startUpload;
 })();
