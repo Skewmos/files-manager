@@ -57,6 +57,10 @@ server {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
+    location ~ /directory\. {
+        deny all;
+    }
+
     location ~ ^/.+\.php(/|$) {
         try_files $uri /index.php = 404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
