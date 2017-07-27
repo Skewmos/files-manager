@@ -1,7 +1,7 @@
 <?php
 
 use App\Controllers\HomeController;
-use App\Controllers\UploadController;
+use App\Controllers\UploadDownloadController;
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 
@@ -10,7 +10,6 @@ use App\Controllers\AdminController;
 // Routes login
 $app->get('/login', AuthController::class. ':getLogin')->setName('login');
 $app->post('/login', AuthController::class. ':postLogin');
-
 
 ////////////// Routes accessibles par les utilisateurs uniquement /////////////
 // Middleware pour checker la session utilisateur
@@ -31,9 +30,12 @@ $app->group('', function () {
   $this->post('/profil', HomeController::class. ':postProfil');
 
   // Routes upload
-  $this->get('/upload', UploadController::class. ':getUpload')->setName('upload');
-  $this->post('/upload', UploadController::class. ':postUpload');
-  $this->get('/upload_progress', UploadController::class. ':getUploadProgress')->setName('upload_progress');
+  $this->get('/upload', UploadDownloadController::class. ':getUpload')->setName('upload');
+  $this->post('/upload', UploadDownloadController::class. ':postUpload');
+
+  // Routes de téléchargement
+  $this->get('/download/user/{user}/{file}', UploadDownloadController::class. ':getDownloadUser')->setName('download_user');
+  $this->get('/download/dir/{dir}/{file}', UploadDownloadController::class. ':getDownloadDir')->setName('download_dir');
 
 })->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container));
 

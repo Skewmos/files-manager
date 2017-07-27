@@ -73,7 +73,6 @@ server {
 ```
 
 
-
 ## Librairies/outils
 
 Projet basé sur le template [Fukotaku/fufu](https://github.com/Fukotaku/fufu/)

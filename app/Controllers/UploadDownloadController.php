@@ -4,7 +4,7 @@ namespace App\Controllers;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class UploadController extends Controller
+class UploadDownloadController extends Controller
 {
 
   public function getUpload(RequestInterface $request, $response)
@@ -67,6 +67,14 @@ class UploadController extends Controller
 
       }
     }
+  }
+
+  public function getDownloadUser(RequestInterface $request, $response) {
+
+  }
+
+  public function getDownloadDir(RequestInterface $request, $response) {
+
   }
 
 }
