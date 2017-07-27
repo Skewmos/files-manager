@@ -10,14 +10,6 @@ class UploadDownloadController extends Controller
   public function getUpload(RequestInterface $request, $response)
   {
     $params = array();
-    if(isset($_SESSION['upload_progress_uploadform'])){
-      if($_SESSION['upload_progress_uploadform']['content_length'] === $_SESSION['upload_progress_uploadform']['bytes_processed']){
-        unset($_SESSION['upload_progress_uploadform']);
-      }else{
-        $params['upload_en_cours'] = true;
-      }
-    }
-
     $size = $this->medoo->select('settings', 'upload_size');
     $params['upload_size'] = $size[0];
     $params['mo_size'] = $this->octetConvertToMo($size[0]);
@@ -26,7 +18,6 @@ class UploadDownloadController extends Controller
     $formats = implode(", ", $formats);
     $params['formats'] = $formats;
 
-    $params['id_upload'] = ini_get("session.upload_progress.name");
     $this->render($response, 'pages/upload.twig', $params);
   }
 
@@ -95,6 +86,7 @@ class UploadDownloadController extends Controller
       'id' => $file_id,
       'id_user' => $user_id
     ]);
+
     if(!empty($file)){
       $location = $path.$file_id.".".$file[0]['format'];
 
@@ -116,6 +108,61 @@ class UploadDownloadController extends Controller
     $file_id = $request->getAttribute('file');
     $user_id = $request->getAttribute('dir');
 
+  }
+
+  public function getSteam(RequestInterface $request, $response) {
+    $file_id = $request->getAttribute('file');
+    $user_id = $request->getAttribute('user');
+
+    $url = "http://".$_SERVER['HTTP_HOST'];
+    $path = dirname(dirname(__DIR__))."/public/directory/".$user_id."/";
+    if(!file_exists($path)){
+      $this->alert('Répertoire introuvable', 'danger');
+      return $this->redirect($response, 'home');
+    }
+
+    if($user_id != $_SESSION['auth']['id']){
+      $access = $this->medoo->select('access', '*',[
+        'id_dir' => $user_id,
+        'type' => 'user',
+        'id_user' => $_SESSION['auth']['id']
+      ]);
+      if(empty($access)){
+        $this->alert('Vous n\'avez pas accès à ce répertoire', 'danger');
+        return $this->redirect($response, 'home');
+      }
+    }
+
+    $file = $this->medoo->select('files', '*',[
+      'id' => $file_id,
+      'id_user' => $user_id
+    ]);
+
+    if(!empty($file)){
+      if($file[0]['format'] == "webm" || $file[0]['format'] == "mp4"){
+        // Video
+        $params = array();
+        $params['format'] = "video";
+        $params['file']['name'] = $file[0]['name'];
+        $params['file']['format'] = $file[0]['format'];
+        $params['location'] = $url."/directory/".$user_id."/".$file[0]['id'].".".$file[0]['format'];
+        $this->render($response, 'pages/stream.twig', $params);
+      }elseif($file[0]['format'] == "mp3"){
+        // Audio
+        $params = array();
+        $params['format'] = "audio";
+        $params['file']['name'] = $file[0]['name'];
+        $params['file']['format'] = $file[0]['format'];
+        $params['location'] = $url."/directory/".$user_id."/".$file[0]['id'].".".$file[0]['format'];
+        $this->render($response, 'pages/stream.twig', $params);
+      }else{
+        $this->alert('Format de fichier non supporté', 'danger');
+        return $this->redirect($response, 'home');
+      }
+    }else{
+      $this->alert('Fichier introuvable', 'danger');
+      return $this->redirect($response, 'home');
+    }
   }
 
 }

@@ -14,7 +14,7 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [x] Bar de progression d'upload.
 - [x] Téléchargement des fichiers (dossier utilisateur).
 - [ ] Téléchargement des fichiers (dossier serveur).
-- [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
+- [~] Visualisation des fichiers type (vidéo/image/musique/pdf...).
 - [ ] Partage de répertoires du serveur.
 - [ ] Partage de dossier entre utilisateur.
 
@@ -56,10 +56,6 @@ server {
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    location ~ /directory\. {
-        deny all;
     }
 
     location ~ ^/.+\.php(/|$) {

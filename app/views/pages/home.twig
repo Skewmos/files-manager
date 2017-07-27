@@ -19,10 +19,10 @@
       <td>
         <div class="btn-group">
           <a href="{{ path_for('download_user', {'user': file.id_user, 'file': file.id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></a>
-          {% if file.format == "mp4" %}<!-- Fichier vidéo -->
+          {% if file.format == "mp4" or file.format == "webm" %}<!-- Fichier vidéo -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><span class="glyphicon glyphicon-film"></span> Regarder</a></li>
+              <li><a href="{{ path_for('stream', {'user': file.id_user, 'file': file.id}) }}"><span class="glyphicon glyphicon-film"></span> Regarder</a></li>
             </ul>
           {% elseif file.format == "mp3" %}<!-- Fichier audio -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
