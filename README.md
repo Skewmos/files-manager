@@ -1,7 +1,7 @@
 [![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/Fukotaku/files-manager/blob/master/LICENSE)
 # files-manager
 
-files-manager est une application web développé en php qui permet de gérer vos fichiers présents sur le serveur en http (Upload/Download). L'application dispose de divers fonctionnalités, comme le visionnage de vidéo et le partage de dossiers entre utilisateur.
+files-manager est une application web développé en php qui permet de uploader/télécharger vos fichiers sur le serveur en http. L'application dispose de divers fonctionnalités, comme le visionnage de vidéo et le partage de dossiers entre utilisateur ect...
 
 Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md](https://github.com/Fukotaku/files-manager/blob/master/CONTRIBUTING.md).
 
@@ -12,7 +12,8 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [x] Répertoires utilisateur.
 - [x] Upload de fichiers dans les répertoires utilisateur.
 - [x] Bar de progression d'upload.
-- [ ] Téléchargement des fichiers.
+- [x] Téléchargement des fichiers (dossier utilisateur).
+- [ ] Téléchargement des fichiers (dossier serveur).
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
 - [ ] Partage de répertoires du serveur.
 - [ ] Partage de dossier entre utilisateur.

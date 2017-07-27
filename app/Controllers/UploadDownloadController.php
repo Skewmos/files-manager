@@ -73,6 +73,12 @@ class UploadDownloadController extends Controller
     $file_id = $request->getAttribute('file');
     $user_id = $request->getAttribute('user');
 
+    $path = dirname(dirname(__DIR__))."/public/directory/".$user_id."/";
+    if(!file_exists($path)){
+      $this->alert('Répertoire introuvable', 'danger');
+      return $this->redirect($response, 'home');
+    }
+
     if($user_id != $_SESSION['auth']['id']){
       $access = $this->medoo->select('access', '*',[
         'id_dir' => $user_id,
@@ -90,18 +96,15 @@ class UploadDownloadController extends Controller
       'id_user' => $user_id
     ]);
     if(!empty($file)){
+      $location = $path.$file_id.".".$file[0]['format'];
 
-      $path = dirname(dirname(__DIR__))."/public/directory/".$user_id."/";
-      $file_absolut = $file_id.".".$file[0]['format'];
-      $location = $path.$file_absolut;
-
-      // header("Cache-Control: public");
-      // header("Content-Description: File Transfer");
-      // header('Content-Type: application/octet-stream');
-      // header('Content-Transfer-Encoding: binary');
-      // header('Content-Length: ' . filesize($location));
-      // header('Content-disposition: attachment; filename="' . $file[0]['name'] . '"');
-      // Préparation de l'utilisation des lib apache/nginx pour le téléchargement de fichier lourd.
+      header("Cache-Control: public");
+      header("Content-Description: File Transfer");
+      header('Content-Type: application/octet-stream');
+      header('Content-Transfer-Encoding: binary');
+      header('Content-Length: ' . filesize($location));
+      header('Content-disposition: attachment; filename="' . $file[0]['name'] . '"');
+      readfile($location);
 
     }else{
       $this->alert('Fichier introuvable', 'danger');
@@ -110,6 +113,8 @@ class UploadDownloadController extends Controller
   }
 
   public function getDownloadDir(RequestInterface $request, $response) {
+    $file_id = $request->getAttribute('file');
+    $user_id = $request->getAttribute('dir');
 
   }
 
