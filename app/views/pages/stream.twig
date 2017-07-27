@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+<div class="text-center">
+
+  <h1>{{ file.name }}</h1>
+  {% if format == "video" %}
+    <video width="720" controls>
+      <source src="{{ location }}" type="{{ format }}/{{ file.format }}">
+        Votre navigateur ne supporte pas la lecture de vidéo avec HTML5.
+    </video>
+  {% elseif format == "audio" %}
+    <audio controls>
+      <source src="{{ location }}" type="{{ format }}/{{ file.format }}">
+      Votre navigateur ne supporte pas la lecture de son avec HTML5.
+    </audio>
+  {% endif %}
+</div>
+
+
+{% endblock %}

@@ -33,9 +33,11 @@ $app->group('', function () {
   $this->get('/upload', UploadDownloadController::class. ':getUpload')->setName('upload');
   $this->post('/upload', UploadDownloadController::class. ':postUpload');
 
-  // Routes de téléchargement
+  // Routes de téléchargement/stream
   $this->get('/download/user/{user}/{file}', UploadDownloadController::class. ':getDownloadUser')->setName('download_user');
   $this->get('/download/dir/{dir}/{file}', UploadDownloadController::class. ':getDownloadDir')->setName('download_dir');
+
+  $this->get('/stream/user/{user}/{file}', UploadDownloadController::class. ':getSteam')->setName('stream');
 
 })->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container));
 
