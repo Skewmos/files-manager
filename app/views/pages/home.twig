@@ -27,7 +27,7 @@
           {% elseif file.format == "mp3" %}<!-- Fichier audio -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><span class="glyphicon glyphicon-headphones"></span> Écouter</a></li>
+              <li><a href="{{ path_for('stream', {'user': file.id_user, 'file': file.id}) }}"><span class="glyphicon glyphicon-headphones"></span> Écouter</a></li>
             </ul>
           {% elseif file.format == "png" or file.format == "jpg" or file.format == "jpeg" or file.format == "gif" or file.format == "bmp" or file.format == "ico" %}<!-- Fichier image -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
