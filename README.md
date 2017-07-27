@@ -25,6 +25,7 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [x] Modification des paramètres d'application au panel admin.
 
 - [ ] Mise en place d'une pagination pour les listes.
+- [ ] Système de mise à jours de l'application.
 
 
 ## Pre-requis/configuration
