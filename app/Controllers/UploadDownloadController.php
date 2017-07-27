@@ -4,7 +4,7 @@ namespace App\Controllers;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class UploadController extends Controller
+class UploadDownloadController extends Controller
 {
 
   public function getUpload(RequestInterface $request, $response)
@@ -13,9 +13,8 @@ class UploadController extends Controller
     if(isset($_SESSION['upload_progress_uploadform'])){
       if($_SESSION['upload_progress_uploadform']['content_length'] === $_SESSION['upload_progress_uploadform']['bytes_processed']){
         unset($_SESSION['upload_progress_uploadform']);
-        $upload = false;
       }else{
-        $upload = true;
+        $params['upload_en_cours'] = true;
       }
     }
 
@@ -27,11 +26,7 @@ class UploadController extends Controller
     $formats = implode(", ", $formats);
     $params['formats'] = $formats;
 
-    if($upload === true){
-      $params['upload_en_cours'] = true;
-    }else{
-      $params['id_upload'] = ini_get("session.upload_progress.name");
-    }
+    $params['id_upload'] = ini_get("session.upload_progress.name");
     $this->render($response, 'pages/upload.twig', $params);
   }
 
@@ -74,16 +69,53 @@ class UploadController extends Controller
     }
   }
 
-  public function getUploadProgress(RequestInterface $request, $response)
-  {
-    if (isset($_SESSION["upload_progress_uploadform"]) && !empty($_SESSION["upload_progress_uploadform"])) {
-      $current = $_SESSION["upload_progress_uploadform"]["bytes_processed"];
-      $total = $_SESSION["upload_progress_uploadform"]["content_length"];
-      echo $current < $total ? ceil($current / $total * 100) : 100;
+  public function getDownloadUser(RequestInterface $request, $response) {
+    $file_id = $request->getAttribute('file');
+    $user_id = $request->getAttribute('user');
+
+    $path = dirname(dirname(__DIR__))."/public/directory/".$user_id."/";
+    if(!file_exists($path)){
+      $this->alert('Répertoire introuvable', 'danger');
+      return $this->redirect($response, 'home');
     }
-    else {
-      echo 100;
+
+    if($user_id != $_SESSION['auth']['id']){
+      $access = $this->medoo->select('access', '*',[
+        'id_dir' => $user_id,
+        'type' => 'user',
+        'id_user' => $_SESSION['auth']['id']
+      ]);
+      if(empty($access)){
+        $this->alert('Vous n\'avez pas accès à ce répertoire', 'danger');
+        return $this->redirect($response, 'home');
+      }
     }
+
+    $file = $this->medoo->select('files', '*',[
+      'id' => $file_id,
+      'id_user' => $user_id
+    ]);
+    if(!empty($file)){
+      $location = $path.$file_id.".".$file[0]['format'];
+
+      header("Cache-Control: public");
+      header("Content-Description: File Transfer");
+      header('Content-Type: application/octet-stream');
+      header('Content-Transfer-Encoding: binary');
+      header('Content-Length: ' . filesize($location));
+      header('Content-disposition: attachment; filename="' . $file[0]['name'] . '"');
+      readfile($location);
+
+    }else{
+      $this->alert('Fichier introuvable', 'danger');
+      return $this->redirect($response, 'home');
+    }
+  }
+
+  public function getDownloadDir(RequestInterface $request, $response) {
+    $file_id = $request->getAttribute('file');
+    $user_id = $request->getAttribute('dir');
+
   }
 
 }

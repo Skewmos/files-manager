@@ -5,7 +5,6 @@
   <h1>Uploader un fichier</h1>
   <form class="form-group" id="uploadform" action="" method="post" enctype="multipart/form-data">
     {{ csrf() }}
-    <input type="hidden" value="uploadform" name="{{ id_upload }}">
     <input id="file" type="file" name="file" class="file">
     <div class="input-group col-xs-12">
       <input type="text" class="form-control" name="file" disabled placeholder="Votre fichier">
@@ -20,14 +19,9 @@
     </div>
 
     <span id="alertFile" class="label label-danger"><strong>Fichier trop lourd, veuillez en choisir un autre !</strong></span>
-    {% if upload_en_cours %}
-      <div class="alert alert-dismissible alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Vous êtes déjà en train d'uploader un fichier, veuillez réssayer après avoir fini votre upload.
-      </div>
-    {% else %}
-      <button type="submit" id="btnSubmit" class="btn btn-success"><span class="glyphicon glyphicon-open"></span> Uploader</button>
-    {% endif %}
+    <div id="status"></div>
+
+    <button type="submit" id="btnSubmit" class="btn btn-success"><span class="glyphicon glyphicon-open"></span> Uploader</button>
 
   </form>
 
@@ -42,9 +36,9 @@
 
   <script type="text/javascript">
     var maxUploadSize = "{{ upload_size }}";
-    var redirection = "{{ path_for('home') }}";
-    var urlAjax = "{{ path_for('upload_progress') }}";
+    var urlRedirect = "{{ path_for('home') }}";
   </script>
+  <script type="text/javascript" src="{{ path_for('home') }}js/jquery.ajax.min.js"></script>
   <script type="text/javascript" src="{{ path_for('home') }}js/upload.min.js"></script>
 
 {% endblock %}

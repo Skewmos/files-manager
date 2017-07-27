@@ -1,7 +1,7 @@
 <?php
 
 use App\Controllers\HomeController;
-use App\Controllers\UploadController;
+use App\Controllers\UploadDownloadController;
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 
@@ -10,7 +10,6 @@ use App\Controllers\AdminController;
 // Routes login
 $app->get('/login', AuthController::class. ':getLogin')->setName('login');
 $app->post('/login', AuthController::class. ':postLogin');
-
 
 ////////////// Routes accessibles par les utilisateurs uniquement /////////////
 // Middleware pour checker la session utilisateur
@@ -23,14 +22,20 @@ $app->group('', function () {
   $this->get('/', HomeController::class. ':getHome')->setName('home');
   $this->get('/delete/{id}', HomeController::class. ':getDelFile')->setName('del_file');
 
+  // Routes des répertoires partagés
+  $this->get('/dir', HomeController::class. ':getDirectory')->setName('dir');
+
   // Routes profil
   $this->get('/profil', HomeController::class. ':getProfil')->setName('profil');
   $this->post('/profil', HomeController::class. ':postProfil');
 
   // Routes upload
-  $this->get('/upload', UploadController::class. ':getUpload')->setName('upload');
-  $this->post('/upload', UploadController::class. ':postUpload');
-  $this->get('/upload_progress', UploadController::class. ':getUploadProgress')->setName('upload_progress');
+  $this->get('/upload', UploadDownloadController::class. ':getUpload')->setName('upload');
+  $this->post('/upload', UploadDownloadController::class. ':postUpload');
+
+  // Routes de téléchargement
+  $this->get('/download/user/{user}/{file}', UploadDownloadController::class. ':getDownloadUser')->setName('download_user');
+  $this->get('/download/dir/{dir}/{file}', UploadDownloadController::class. ':getDownloadDir')->setName('download_dir');
 
 })->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container));
 
@@ -57,13 +62,13 @@ $app->group('', function () {
   $this->get('/admin/del_user/{id}', AdminController::class. ':getDelUser')->setName('del_user');
 
   // Routes directory admin
-  $this->get('/admin/directory', AdminController::class. ':getDirectory')->setName('directory');
+  $this->get('/admin/dir', AdminController::class. ':getDirectory')->setName('admin_dir');
 
-  $this->get('/admin/add_directory', AdminController::class. ':getAddDirectory')->setName('add_directory');
-  $this->post('/admin/add_directory', AdminController::class. ':postAddDirectory');
+  $this->get('/admin/add_dir', AdminController::class. ':getAddDirectory')->setName('add_dir');
+  $this->post('/admin/add_dir', AdminController::class. ':postAddDirectory');
 
-  $this->get('/admin/edit_directory', AdminController::class. ':getEditDirectory')->setName('edit_directory');
-  $this->post('/admin/edit_directory', AdminController::class. ':postEditDirectory');
+  $this->get('/admin/edit_dir', AdminController::class. ':getEditDirectory')->setName('edit_dir');
+  $this->post('/admin/edit_dir', AdminController::class. ':postEditDirectory');
 
 })
 ->add(new App\Middlewares\AuthMiddleware($container->view->getEnvironment(), $container))

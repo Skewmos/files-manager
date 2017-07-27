@@ -1,0 +1,35 @@
+{% extends "admin.twig" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>{{ title }}</h2>
+    <form class="form-group" action="" method="post">
+      {{ csrf() }}
+      <div class="form-group {% if alert.errors.name %} has-error{% endif %}">
+        <label class="control-label" for="name">Nom :</label>
+        <input class="form-control" type="text" name="name" value="{% if alert.errors.name %}{{ old.name }}{% elseif dir %}{{ dir.name }}{% endif %}" id="name">
+        {% if alert.errors.name %}
+          <span class="help-block">{{ alert.errors.name }}</span>
+        {% endif %}
+      </div>
+
+      <div class="form-group {% if alert.errors.dir %} has-error{% endif %}">
+        <label class="control-label" for="chemin">Chemin absolut :</label>
+        <input class="form-control" type="text" name="chemin" value="{% if alert.errors.dir %}{{ old.dir }}{% elseif dir %}{{ dir.chemin }}{% endif %}" id="chemin">
+        {% if alert.errors.dir %}
+          <span class="help-block">{{ alert.errors.dir }}</span>
+        {% endif %}
+      </div>
+
+      {% if dir %}
+        <input type="hidden" name="id" value="{{ dir.id }}">
+      {% endif %}
+
+      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Enregistrer</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

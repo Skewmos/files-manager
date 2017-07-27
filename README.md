@@ -1,7 +1,7 @@
 [![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/Fukotaku/files-manager/blob/master/LICENSE)
 # files-manager
 
-files-manager est une application web développé en php qui permet de gérer vos fichiers présents sur le serveur en http (Upload/Download). L'application dispose de divers fonctionnalités, comme le visionnage de vidéo et le partage de dossiers entre utilisateur.
+files-manager est une application web développé en php qui permet de uploader/télécharger vos fichiers sur le serveur en http. L'application dispose de divers fonctionnalités, comme le visionnage de vidéo et le partage de dossiers entre utilisateur ect...
 
 Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md](https://github.com/Fukotaku/files-manager/blob/master/CONTRIBUTING.md).
 
@@ -12,7 +12,8 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [x] Répertoires utilisateur.
 - [x] Upload de fichiers dans les répertoires utilisateur.
 - [x] Bar de progression d'upload.
-- [ ] Téléchargement des fichiers.
+- [x] Téléchargement des fichiers (dossier utilisateur).
+- [ ] Téléchargement des fichiers (dossier serveur).
 - [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
 - [ ] Partage de répertoires du serveur.
 - [ ] Partage de dossier entre utilisateur.
@@ -38,23 +39,9 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
     - `upload_tmp_dir = tmp`
     - `post_max_size = (your_max_upload)M`
     - `upload_max_filesize = (your_max_upload)M`
-- php7+
-  - extension apc
-  - php.ini
-    - `extension = php_apc.dll`
-    - `apc.enabled = 1`
-    - `apc.rfc1867 = On`
-    - `apc.shm_size = 64M`
-    - `apc.max_file_size = (your_max_upload)M`
-  - apcu-ini
-    - `extension=apc.so`
 
 - nginx
   - `client_max_body_size (your_max_upload)m;`
-
-
-Lien pour l'extension apc: [stackoverflow](https://stackoverflow.com/questions/36129259/php7-with-apcu-call-to-undefined-function-apc-fetch)
-
 
 
 ### Configuration nginx :
@@ -71,6 +58,10 @@ server {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
+    location ~ /directory\. {
+        deny all;
+    }
+
     location ~ ^/.+\.php(/|$) {
         try_files $uri /index.php = 404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -85,7 +76,6 @@ server {
 
 }
 ```
-
 
 
 ## Librairies/outils
@@ -120,6 +110,8 @@ $ vendor/bin/phinx migrate
 ``` bash
 $ vendor/bin/phinx seed:run
 ```
+
+Le compte administrateur est `admin@admin.fr` avec comme mot de passe `admin`, une fois l'installation complété, vous pourrez vous connecter et changer les informations du compte.
 
 
 ## Permissions
