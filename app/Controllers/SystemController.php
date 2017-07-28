@@ -45,6 +45,7 @@ class SystemController extends Controller {
         if($_POST['port']) $_SESSION['old']['port'] = $_POST['port'];
         if($_POST['dbname']) $_SESSION['old']['dbname'] = $_POST['dbname'];
         if($_POST['bdd_user']) $_SESSION['old']['bdd_user'] = $_POST['bdd_user'];
+        if($_POST['bdd_pass']) $_SESSION['old']['bdd_pass'] = $_POST['bdd_pass'];
 
         if($_POST['email']) $_SESSION['old']['email'] = $_POST['email'];
         if($_POST['password']) $_SESSION['old']['password'] = $_POST['password'];
@@ -92,9 +93,14 @@ class SystemController extends Controller {
     $req->execute([$_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT), $id_admin]);
     $id_user = $pdo->lastInsertId();
 
-    $this->new_directory($id_user);
+    $firstDirectory = dirname(dirname(__DIR__))."/public/directory/".$id_user;
+    if(!file_exists($firstDirectory)){
+      $this->new_directory($id_user);
+    }
 
-    $this->addLog("Installation de files manager réussi");
+    $log = $pdo->prepare("INSERT INTO logs SET message = ?, ip = ?, date = NOW()");
+    $log->execute(['Installation de files manager réussi', $this->get_ip()]);
+
     $this->alert("Félicitation, files manager as été correctement installé, pensez à supprimer le dossier 'public/installation'");
     return $this->redirect($response, 'login');
 
