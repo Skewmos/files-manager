@@ -1,18 +1,27 @@
 <?php
+$env = dirname(__DIR__)."/.env";
 
 // Autoload de composer
 require '../vendor/autoload.php';
 
-// Initialisation du .env
-$dotenv = new Dotenv\Dotenv(__DIR__.'/../');
-$dotenv->load(true);
+if(file_exists($env)){
+  // Initialisation du .env
+  $dotenv = new Dotenv\Dotenv(__DIR__.'/../');
+  $dotenv->load(true);
 
-// Configuration slim pour les messages d'erreurs
-$configuration = [
-  'settings' => [
-    'displayErrorDetails' => env('ENV')
-  ],
-];
+  // Configuration slim pour les messages d'erreurs
+  $configuration = [
+    'settings' => [
+      'displayErrorDetails' => false
+    ],
+  ];
+}else{
+  $configuration = [
+    'settings' => [
+      'displayErrorDetails' => true
+    ],
+  ];
+}
 
 // Initialisation des paramètres du container slim
 $c = new \Slim\Container($configuration);

@@ -57,6 +57,19 @@ class SystemController extends Controller {
       return $this->redirect($response, 'install', 400);
     }
 
+    $phinx = dirname(dirname(__DIR__))."/vendor/bin/phinx";
+    $envFile = dirname(dirname(__DIR__))."/.env";
+
+    $config = "# Database production\nDBP_TYPE = 'mysql'\nDBP_NAME = '".$_POST['dbname']."'\nDBP_SERVER = '".$_POST['bdd']."'\nDBP_USER = '".$_POST['bdd_user']."'\nDBP_PWD = '".$_POST['bdd_pass']."'\n# Environment mode\nENV = 'prod'\n# Cache twig\nCACHE = true";
+
+    if(!file_exists($envFile)){
+      r("fichier créé");
+      file_put_contents($envFile, $config);
+    }
+
+    exec($phinx." migrate", $output);
+    r($output);
+
   }
 
   public function getUpdate(RequestInterface $request, $response) {
