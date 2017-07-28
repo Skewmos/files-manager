@@ -1,6 +1,7 @@
 <?php
 
 $container = $app->getContainer();
+$container['container'] = $app->getContainer();
 
 // Twig
 $container['view'] = function ($container) {
