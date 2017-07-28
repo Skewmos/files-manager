@@ -36,9 +36,12 @@ class SystemController extends Controller {
     $c['errorHandler'] = function ($c) {
       return function ($request, $response, $methods) use ($c) {
         $_SESSION['old']['bdd'] = $_POST['bdd'];
-        if(!empty($_POST['port'])) $_SESSION['old']['port'] = $_POST['port'];
+        $_SESSION['old']['port'] = $_POST['port'];
         $_SESSION['old']['dbname'] = $_POST['dbname'];
         $_SESSION['old']['bdd_user'] = $_POST['bdd_user'];
+
+        $_SESSION['old']['email'] = $_POST['email'];
+        $_SESSION['old']['password'] = $_POST['password'];
         $this->alert('Impossible de se connecter à la base de données, re-vérifiez vos informations', 'danger');
         return $this->redirect($response, 'install', 400);
       };

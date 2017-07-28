@@ -36,12 +36,9 @@
             {% endif %}
           </div>
 
-          <div class="form-group {% if alert.errors.port %} has-error{% endif %}">
+          <div class="form-group">
             <label for="port" class="control-label">Port (vide pour le port par défaut) :</label>
             <input type="text" id="port" name="port" class="form-control" value="{{ old.port }}">
-            {% if alert.errors.port %}
-              <span class="help-block">{{ alert.errors.port }}</span>
-            {% endif %}
           </div>
 
           <div class="form-group {% if alert.errors.dbname %} has-error{% endif %}">
@@ -74,7 +71,7 @@
 
           <div class="form-group {% if alert.errors.email %} has-error{% endif %}">
             <label for="email" class="control-label">Adresse email :</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ old.email }}">
+            <input type="email" id="email" name="email" class="form-control" value="{{ old.email }}" required>
             {% if alert.errors.email %}
               <span class="help-block">{{ alert.errors.email }}</span>
             {% endif %}
