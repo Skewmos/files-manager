@@ -9,40 +9,96 @@
   </head>
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <body>
+  <body class="install">
 
     <div class="container">
+      <div class="jumbotron">
+        <h1 class="text-center">Installation de Files Manager</h1>
 
-      <form class="form-signin" action="{{ path_for('login') }}" method="post">
-        <h2 class="form-signin-heading">Se connecter</h2>
+        <ul class="list-group text-center">
+          <li class="list-group-item">Pensez à vérifier les permissions d'écriture aux dossiers 'cache', 'public/installation' et 'public/directory'</li>
+        </ul>
 
-        {{ csrf() }}
+        <form class="form-install" action="{{ path_for('install') }}" method="post">
 
-        <div class="form-group {% if alert.errors.email %} has-error{% endif %}">
-          <label for="inputEmail" class="sr-only">Adresse email</label>
-          <input type="email" id="inputEmail" name="email" class="form-control" value="{{ old.email }}" placeholder="Adresse email" required autofocus>
-          {% if alert.errors.email %}
-            <span class="help-block">{{ alert.errors.email }}</span>
+          {% if alert.danger %}
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ alert.danger }}
+            </div>
           {% endif %}
-        </div>
 
-        <div class="form-group {% if alert.errors.password %} has-error{% endif %}">
-          <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Mot de passe" required>
-          {% if alert.errors.password %}
-            <span class="help-block">{{ alert.errors.password }}</span>
-          {% endif %}
-        </div>
+          {{ csrf() }}
+          <hr class="hr">
+          <h2 class="text-center">Connexion base de données</h2>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="remember" value="1"> Se souvenir de moi
-          </label>
-        </div>
+          <div class="form-group {% if alert.errors.bdd %} has-error{% endif %}">
+            <label for="bdd" class="control-label">Adresse base de données :</label>
+            <input type="text" id="bdd" name="bdd" class="form-control" value="{{ old.bdd }}" required>
+            {% if alert.errors.bdd %}
+              <span class="help-block">{{ alert.errors.bdd }}</span>
+            {% endif %}
+          </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
-      </form>
+          <div class="form-group">
+            <label for="port" class="control-label">Port (vide pour le port par défaut) :</label>
+            <input type="text" id="port" name="port" class="form-control" value="{{ old.port }}">
+          </div>
 
+          <div class="form-group {% if alert.errors.dbname %} has-error{% endif %}">
+            <label for="dbname" class="control-label">Base de données :</label>
+            <input type="text" id="dbname" name="dbname" class="form-control" value="{{ old.dbname }}" required>
+            {% if alert.errors.dbname %}
+              <span class="help-block">{{ alert.errors.dbname }}</span>
+            {% endif %}
+          </div>
+
+          <div class="form-group {% if alert.errors.bdd_user %} has-error{% endif %}">
+            <label for="bdd_user" class="control-label">Utilisateur base de données :</label>
+            <input type="text" id="bdd_user" name="bdd_user" class="form-control" value="{{ old.bdd_user }}" required>
+            {% if alert.errors.bdd_user %}
+              <span class="help-block">{{ alert.errors.bdd_user }}</span>
+            {% endif %}
+          </div>
+
+          <div class="form-group {% if alert.errors.bdd_pass %} has-error{% endif %}">
+            <label for="bdd_pass" class="control-label">Mot de passe base de données :</label>
+            <input type="password" id="bdd_pass" name="bdd_pass" class="form-control" value="{{ old.bdd_pass }}">
+            {% if alert.errors.bdd_pass %}
+              <span class="help-block"></span>
+            {% endif %}
+          </div>
+
+          <br>
+          <hr class="hr">
+          <h2 class="text-center">Compte administrateur</h2>
+
+          <div class="form-group {% if alert.errors.email %} has-error{% endif %}">
+            <label for="email" class="control-label">Adresse email :</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ old.email }}" required>
+            {% if alert.errors.email %}
+              <span class="help-block">{{ alert.errors.email }}</span>
+            {% endif %}
+          </div>
+
+          <div class="form-group {% if alert.errors.password %} has-error{% endif %}">
+            <label for="password" class="control-label">Mot de passe :</label>
+            <input type="password" id="password" name="password" class="form-control" value="{{ old.password }}" required>
+            {% if alert.errors.password %}
+              <span class="help-block">{{ alert.errors.password }}</span>
+            {% endif %}
+          </div>
+          <br>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Installer</button>
+
+        </form>
+
+        <br>
+        <footer class="footer">
+          <p class="text-center">Files Manager - Codé avec <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> sur <a href="https://github.com/Fukotaku/files-manager" target="_blank">github</a></p>
+        </footer>
+
+      </div>
     </div>
 
   </body>

@@ -9,6 +9,12 @@ class AdminController extends Controller {
 
   public function getLog(RequestInterface $request, ResponseInterface $response) {
     $params = array();
+
+    $migrateDir = dirname(dirname(__DIR__))."/public/installation";
+    if(file_exists($migrateDir)){
+      $params['install'] = "Pensez à supprimer le dossier 'public/installation'";
+    }
+
     $logs = $this->medoo->select('logs', '*', [
       "ORDER" => ["date" => "DESC"],
       "LIMIT" => 15

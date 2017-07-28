@@ -1,12 +1,13 @@
 <?php
 
 $container = $app->getContainer();
+$container['container'] = $app->getContainer();
 
 // Twig
-$container['view'] = function ($container) {
+$container['view'] = function ($container) use ($env) {
   $pathView = dirname(dirname(__DIR__));
 
-  if(env('CACHE')){
+  if(file_exists($env)){
     $cache = $pathView.'/cache';
   }else{
     $cache = false;
@@ -21,22 +22,19 @@ $container['view'] = function ($container) {
   return $view;
 };
 
-// Medoo
-$container['medoo'] = function () {
-  if (getenv('ENV') == 'local') {
-    $db = "D";
-  } elseif (getenv('ENV') == 'prod') {
-    $db = "P";
-  }
-  $medoo = new Medoo\Medoo([
-      'database_type' => getenv('DB'.$db.'_TYPE'),
-      'database_name' => getenv('DB'.$db.'_NAME'),
-      'server' => getenv('DB'.$db.'_SERVER'),
-      'username' => getenv('DB'.$db.'_USER'),
-      'password' => getenv('DB'.$db.'_PWD')
-  ]);
-  return $medoo;
-};
+if(file_exists($env)){
+  // Medoo
+  $container['medoo'] = function () {
+    $medoo = new Medoo\Medoo([
+      'database_type' => getenv('DBP_TYPE'),
+      'database_name' => getenv('DBP_NAME'),
+      'server' => getenv('DBP_SERVER'),
+      'username' => getenv('DBP_USER'),
+      'password' => getenv('DBP_PWD')
+    ]);
+    return $medoo;
+  };
+}
 
 //Csrf
 $container['csrf'] = function () {

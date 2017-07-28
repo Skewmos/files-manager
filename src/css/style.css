@@ -21,6 +21,8 @@
   height: auto;
   font-size: 16px;
 }
+
+/* Footer */
 .glyphicon-heart {
   color: red;
 }
@@ -32,4 +34,33 @@
 .progress .progress-bar {
   font-size: 16px;
   line-height: 14px;
+}
+
+/* Install */
+.install {
+  background-color: #008cba;
+}
+hr.hr {
+  height: 1px;
+  margin: -0.5em 0;
+  padding: 0;
+  color: #000;
+  background-color: #000;
+  border: 0;
+}
+.form-install {
+  max-width: 530px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-install .form-install-heading,
+.form-install .checkbox {
+  margin-bottom: 10px;
+}
+.form-install .checkbox {
+  font-weight: normal;
+}
+.form-install .form-control {
+  height: auto;
+  font-size: 16px;
 }
