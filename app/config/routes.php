@@ -4,12 +4,17 @@ use App\Controllers\HomeController;
 use App\Controllers\UploadDownloadController;
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
+use App\Controllers\SystemController;
 
 
 //////////////////// Routes accessible par tous le monde ////////////////////
 // Routes login
 $app->get('/login', AuthController::class. ':getLogin')->setName('login');
 $app->post('/login', AuthController::class. ':postLogin');
+
+// Routes install
+$app->get('/install', SystemController::class. ':getInstall')->setName('install');
+$app->post('/install', SystemController::class. ':postInstall');
 
 ////////////// Routes accessibles par les utilisateurs uniquement /////////////
 // Middleware pour checker la session utilisateur

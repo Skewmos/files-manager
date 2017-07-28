@@ -8,18 +8,8 @@ use Respect\Validation\Validator;
 class SystemController extends Controller {
 
   public function getInstall(RequestInterface $request, $response) {
-    if(!isset($_SESSION['step'])){
-      $_SESSION['step'] = 1;
-      $params = array();
-      $this->render($response, 'install.twig', $params);
-    }else{
-      if(isset($_SESSION['step2'])){
-
-      }elseif(isset($_SESSION['step3'])){
-
-      }
-    }
-
+    $params = array();
+    $this->render($response, 'install.twig', $params);
   }
 
   public function postInstall(RequestInterface $request, $response) {
