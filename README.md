@@ -25,6 +25,8 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [x] Modification des paramètres d'application au panel admin.
 
 - [ ] Mise en place d'une pagination pour les listes.
+
+- [x] Système d'installation de l'application.
 - [ ] Système de mise à jours de l'application.
 
 
@@ -43,36 +45,6 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 
 - nginx
   - `client_max_body_size (your_max_upload)m;`
-
-
-### Configuration nginx :
-
-```
-server {
-    listen      80;
-    server_name domaine.tld;
-
-    root /path/of/project/in/public;
-    index index.php;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    location ~ ^/.+\.php(/|$) {
-        try_files $uri /index.php = 404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
-        # for php5 => fastcgi_pass unix:/var/run/php5-fpm.sock;
-
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-
-}
-```
 
 
 ## Librairies/outils
@@ -94,23 +66,41 @@ Via composer
 $ composer install
 ```
 
-Vérifiez que le fichier `.env` a bien été créé, il s'agit du fichier de configuration de votre environnement ou vous définissez la connexion à la base de données, l'environnement `local` ou `prod` et l'activation du cache de twig.
+Autoriser les dossiers `cache`, `public` et `public/directory` à l'écriture (chmod 775).
 
-Si jamais le fichier n'a pas été créé, faite le manuellement en dupliquant `.env.example`.
 
-Effectuer la migration des tables via les commandes `phinx`
+#### Si vous utilisez apache :
 
-``` bash
-$ vendor/bin/phinx migrate
+Pas de configuration particulière.
+
+
+#### Si vous utilisez nginx :
+
+```
+server {
+    listen      80;
+    server_name domaine.tld;
+
+    root /path/files-manager/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ ^/.+\.php(/|$) {
+        try_files $uri /index.php = 404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        # for php5 => fastcgi_pass unix:/var/run/php5-fpm.sock;
+
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+}
 ```
 
-``` bash
-$ vendor/bin/phinx seed:run
-```
-
-Le compte administrateur est `admin@admin.fr` avec comme mot de passe `admin`, une fois l'installation complété, vous pourrez vous connecter et changer les informations du compte.
-
-
-## Permissions
-
-Autoriser les dossiers `cache` et `public/directory` à l'écriture (chmod 775).
+Pour finir, rendez-vous à l'url de votre application `http://domaine.tld/install` pour accéder à la page d'installation et suivez les étapes.

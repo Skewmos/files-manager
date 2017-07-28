@@ -13,6 +13,20 @@
 
     <div class="container">
 
+      {% if alert.success %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ alert.success }}
+        </div>
+      {% endif %}
+
+      {% if alert.danger %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ alert.danger }}
+        </div>
+      {% endif %}
+
       <form class="form-signin" action="{{ path_for('login') }}" method="post">
         <h2 class="form-signin-heading">Se connecter</h2>
 

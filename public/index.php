@@ -6,7 +6,7 @@ require '../vendor/autoload.php';
 
 if(file_exists($env)){
   // Initialisation du .env
-  $dotenv = new Dotenv\Dotenv(__DIR__.'/../');
+  $dotenv = new Dotenv\Dotenv(dirname(__DIR__));
   $dotenv->load(true);
 
   // Configuration slim pour les messages d'erreurs

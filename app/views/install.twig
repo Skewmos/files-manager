@@ -13,7 +13,11 @@
 
     <div class="container">
       <div class="jumbotron">
-        <h1 class="text-center">Installation</h1>
+        <h1 class="text-center">Installation de Files Manager</h1>
+
+        <ul class="list-group text-center">
+          <li class="list-group-item">Pensez à vérifier les permissions d'écriture aux dossiers 'cache', 'public/installation' et 'public/directory'</li>
+        </ul>
 
         <form class="form-install" action="{{ path_for('install') }}" method="post">
 
@@ -85,7 +89,7 @@
             {% endif %}
           </div>
           <br>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Lancer l'installation</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Installer</button>
 
         </form>
 
