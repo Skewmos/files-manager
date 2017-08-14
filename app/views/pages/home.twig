@@ -32,12 +32,12 @@
           {% elseif file.format == "png" or file.format == "jpg" or file.format == "jpeg" or file.format == "gif" or file.format == "bmp" or file.format == "ico" %}<!-- Fichier image -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Afficher</a></li>
+              <li><a href="directory/{{ file.id_user }}/{{ file.id }}.{{ file.format }}"><span class="glyphicon glyphicon-picture"></span> Afficher</a></li>
             </ul>
           {% elseif file.format == "pdf" %}<!-- Fichier pdf -->
             <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span> Afficher</a></li>
+              <li><a href="directory/{{ file.id_user }}/{{ file.id }}.{{ file.format }}"><span class="glyphicon glyphicon-eye-open"></span> Afficher</a></li>
             </ul>
           {% endif %}
         </div>

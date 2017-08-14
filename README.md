@@ -14,7 +14,7 @@ Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md]
 - [x] Bar de progression d'upload.
 - [x] Téléchargement des fichiers (dossier utilisateur).
 - [ ] Téléchargement des fichiers (dossier serveur).
-- [ ] Visualisation des fichiers type (vidéo/image/musique/pdf...).
+- [x] Visualisation des fichiers type (vidéo/image/musique/pdf...).
 - [ ] Partage de répertoires du serveur.
 - [ ] Partage de dossier entre utilisateur.
 
